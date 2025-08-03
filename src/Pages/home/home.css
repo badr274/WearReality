@@ -1,0 +1,6 @@
+.categories-swiper {
+  padding-bottom: 20px;
+}
+.categories-swiper .swiper-pagination {
+  bottom: 0px !important;
+}
