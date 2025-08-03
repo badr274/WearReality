@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import "./Auth.css";
 export default function Signup() {
   const navigate = useNavigate();
 
@@ -58,12 +58,12 @@ export default function Signup() {
 
   return (
     <div className="container mt-5">
-      <h2
+      <h1
         className="text-center mb-4 fw-bold fst-italic"
-        style={{ color: "#651214ff" }}
+        // style={{ color: "#651214ff" }}
       >
         Sign Up
-      </h2>
+      </h1>
 
       {errors && <div className="alert alert-danger">{errors}</div>}
       {successMessage && (
@@ -147,8 +147,8 @@ export default function Signup() {
 
         <button
           type="submit"
-          className="btn w-100 fw-bold"
-          style={{ backgroundColor: "#651214ff", color: "white" }}
+          className="btn w-100 fw-bold submit-btn"
+          // style={{ backgroundColor: "#651214ff", color: "white" }}
         >
           Signup
         </button>

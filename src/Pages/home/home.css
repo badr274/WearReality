@@ -1,6 +1,14 @@
 .categories-swiper {
   padding-bottom: 20px;
 }
+.categories-swiper img {
+  height: 200px;
+  object-fit: cover;
+}
 .categories-swiper .swiper-pagination {
   bottom: 0px !important;
+}
+.categories-slider-skeleton {
+  height: 180px;
+  background: linear-gradient(90deg, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
 }
