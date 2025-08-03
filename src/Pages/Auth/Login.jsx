@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import "./Auth.css";
 export default function Login() {
   const navigate = useNavigate();
 
@@ -27,12 +27,7 @@ export default function Login() {
 
   return (
     <div className="container d-flex justify-content-center align-items-center flex-column vh-100">
-      <h1
-        style={{ color: "#651214ff" }}
-        className="fst-italic mt-5 text-center"
-      >
-        Welcome to the Login Page
-      </h1>
+      <h1 className="fst-italic mt-5 text-center">Welcome to the Login Page</h1>
       {error && <div className="alert alert-danger mt-3">{error}</div>}
       <form onSubmit={handleSubmit} className="mt-5 w-50">
         <div className="mb-3">
@@ -63,11 +58,7 @@ export default function Login() {
           />
         </div>
 
-        <button
-          type="submit"
-          className="btn w-100 fw-bold"
-          style={{ backgroundColor: "#651214ff", color: "white" }}
-        >
+        <button type="submit" className="btn w-100 fw-bold submit-btn">
           Login
         </button>
       </form>
