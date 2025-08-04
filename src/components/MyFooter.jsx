@@ -6,9 +6,9 @@ const MyFooter = () => {
     <footer className="text-dark py-4 mt-auto" style={{ backgroundColor: "#f6f2f2ff" }}>
       <Container>
 
-        {/* Section 1: Left + Right aligned titles and texts */}
+        
         <Row className="mb-4">
-  {/* Left side */}
+  
   <Col xs={12}>
     <h5>Get the Wear Reality</h5>
     <p style={{ color: "#4d4d4dff" }}>
@@ -18,10 +18,6 @@ const MyFooter = () => {
 
  
   <Col xs={12}>
-    <h5>Subscribe with your email</h5>
-    <p style={{ color: "#4d4d4dff" }}>
-      Stay updated with our latest offers and news.
-    </p>
     <div className="d-flex">
       <input
         type="email"
