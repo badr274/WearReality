@@ -3,11 +3,13 @@ const MyNavbar = () => {
   const [activeLink, setActiveLink] = useState("home");
   
   const navLinks = [
+
     { name: "Home", id: "home", href: "/home" },
     { name: "Cart", id: "cart", href: "/cart" },
     { name: "Products", id: "products", href: "/product" },
     { name: "About", id: "About", href: "/about" },
     { name: "Contact", id: "Contact", href: "/contact" },
+
   ];
   
   const linkStyle = (id) => ({
