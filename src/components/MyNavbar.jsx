@@ -3,11 +3,13 @@ const MyNavbar = () => {
   const [activeLink, setActiveLink] = useState("home");
   
   const navLinks = [
-    { name: "Home", id: "home" },
-    { name: "Cart", id: "cart" },
-    { name: "Products", id: "products" },
-    { name: "About", id: "About" },
-    { name: "Contact", id: "Contact" },
+
+    { name: "Home", id: "home", href: "/home" },
+    { name: "Cart", id: "cart", href: "/cart" },
+    { name: "Products", id: "products", href: "/product" },
+    { name: "About", id: "About", href: "/about" },
+    { name: "Contact", id: "Contact", href: "/contact" },
+
   ];
   
   const linkStyle = (id) => ({
@@ -52,7 +54,7 @@ const MyNavbar = () => {
             {navLinks.map((link) => (
               <li className="nav-item" key={link.id}>
                 <a
-                  href={`#${link.id}`}
+                  href={`#${link.href}`}
                   style={linkStyle(link.id)}
                   onClick={() => setActiveLink(link.id)}
                   onMouseEnter={(e) => {
