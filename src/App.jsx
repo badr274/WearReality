@@ -4,11 +4,13 @@ import Home from "./Pages/home/Home";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
 import MyNavbar from "./components/MyNavbar";
+
 function App() {
   return (
     // <Router>
   <>
 <MyNavbar/>
+
 <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
