@@ -4,6 +4,7 @@ import Home from "./Pages/home/Home";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
 import MyNavbar from "./components/MyNavbar";
+import MyFooter from './components/MyFooter';
 function App() {
   return (
     // <Router>
@@ -14,6 +15,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
     </Routes>
+      <MyFooter />
   </>
     
    
