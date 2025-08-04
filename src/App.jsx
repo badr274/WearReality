@@ -5,6 +5,7 @@ import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
 import MyNavbar from "./components/MyNavbar";
 import MyFooter from "./components/MyFooter";
+import Cart from "./Pages/cart/Cart";
 function App() {
   return (
     <>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       <MyFooter />
     </>
