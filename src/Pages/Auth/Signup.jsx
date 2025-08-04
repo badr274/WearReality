@@ -26,7 +26,7 @@ export default function Signup() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    // Validate While Typing (optional for real-time validation)
+    // Validate While Typing 
     const fieldName = e.target.name;
     const error = validationRules[fieldName](e.target.value);
     setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: error }));
