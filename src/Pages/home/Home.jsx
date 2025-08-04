@@ -1,11 +1,11 @@
 import Categories from "../../components/home/Categories";
-import Card from "../../components/Card";
 import "./home.css";
+import LatestProduct from "../../components/home/LatestProduct";
 const Home = () => {
   return (
     <div>
       <Categories />
-      <Card />
+      <LatestProduct />
     </div>
   );
 };
