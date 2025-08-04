@@ -6,8 +6,8 @@ const MyNavbar = () => {
     { name: "Home", id: "home" },
     { name: "Cart", id: "cart" },
     { name: "Products", id: "products" },
-    { name: "About", id: "About" },
-    { name: "Contact", id: "Contact" },
+    { name: "About", id: "about" },
+    { name: "Contact", id: "contact" },
   ];
   
   const linkStyle = (id) => ({
