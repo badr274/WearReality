@@ -4,6 +4,7 @@ import Home from "./Pages/home/Home";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
 import MyNavbar from "./components/MyNavbar";
+import Contact from "./Pages/Foulder/Contact";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/contact" element={<Contact />} />
     </Routes>
   </>
     
