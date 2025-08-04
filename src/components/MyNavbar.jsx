@@ -1,30 +1,32 @@
-import React, { useState } from "react";
-const MyNavbar = () => {
-  const [activeLink, setActiveLink] = useState("home");
-  
-  const navLinks = [
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
-    { name: "Home", id: "home", href: "/home" },
+const MyNavbar = () => {
+  const { token, logout } = useContext(AuthContext);
+  const [activeLink, setActiveLink] = useState("home");
+
+  const navLinks = [
+    { name: "Home", id: "home", href: "/" },
     { name: "Cart", id: "cart", href: "/cart" },
     { name: "Products", id: "products", href: "/product" },
     { name: "About", id: "About", href: "/about" },
     { name: "Contact", id: "Contact", href: "/contact" },
-
   ];
-  
+
   const linkStyle = (id) => ({
     color: activeLink === id ? "#651214" : "#4d4d4d",
     textDecoration: "none",
     fontWeight: activeLink === id ? "600" : "normal",
     transition: "color 0.3s",
   });
-  
+
   return (
     <nav
       className="navbar  navbar-expand-lg border-bottom py-2 shadow-sm"
       style={{ backgroundColor: "#f6f2f2ff" }}
     >
-  <div className="container d-flex justify-contenr-between">
+      <div className="container d-flex justify-content-between">
         <a className="navbar-brand d-flex align-items-center" href="#">
           <i
             className="bi bi-cart-fill fs-4 me-2"
@@ -47,14 +49,14 @@ const MyNavbar = () => {
         </button>
 
         <div
-          className="collapse navbar-collapse justify-content-betweens "
+          className="collapse navbar-collapse justify-content-between"
           id="navbarContent"
         >
           <ul className="navbar-nav mb-2 mb-lg-0 flex-lg-row gap-lg-3 me-lg-auto ms-lg-auto">
             {navLinks.map((link) => (
               <li className="nav-item" key={link.id}>
-                <a
-                  href={`#${link.href}`}
+                <Link
+                  to={link.href}
                   style={linkStyle(link.id)}
                   onClick={() => setActiveLink(link.id)}
                   onMouseEnter={(e) => {
@@ -67,15 +69,15 @@ const MyNavbar = () => {
                   }}
                 >
                   {link.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
 
           <div className="d-flex gap-3 mt-3 mt-lg-0  flex-column flex-lg-row">
             <ul className="d-flex list-unstyled mb-0 gap-3">
-              <ul className="d-flex list-unstyled mb-0 gap-3">
-                <li>
+              {["instagram", "pinterest", "twitter"].map((platform) => (
+                <li key={platform}>
                   <a
                     href="#"
                     style={{
@@ -86,50 +88,38 @@ const MyNavbar = () => {
                     onMouseEnter={(e) => (e.target.style.color = "#651214")}
                     onMouseLeave={(e) => (e.target.style.color = "#4d4d4d")}
                   >
-                    <i className="bi bi-instagram"></i>
+                    <i className={`bi bi-${platform}`}></i>
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="#"
-                    style={{
-                      color: "#4d4d4d",
-                      fontSize: "1.2rem",
-                      transition: "color 0.3s",
-                    }}
-                    onMouseEnter={(e) => (e.target.style.color = "#651214")}
-                    onMouseLeave={(e) => (e.target.style.color = "#4d4d4d")}
-                  >
-                    <i className="bi bi-pinterest"></i>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    style={{
-                      color: "#4d4d4d",
-                      fontSize: "1.2rem",
-                      transition: "color 0.3s",
-                    }}
-                    onMouseEnter={(e) => (e.target.style.color = "#651214")}
-                    onMouseLeave={(e) => (e.target.style.color = "#4d4d4d")}
-                  >
-                    <i className="bi bi-twitter"></i>
-                  </a>
-                </li>
-              </ul>
+              ))}
             </ul>
 
-            <a
-              href="/login"
-              className="signout-link text-decoration-none"
-              style={{ color: "#651214", fontWeight:"bold" }}
-            >Log in </a>
-            <a
-              href="/signup"
-              className="signout-link text-decoration-none"
-              style={{ color: "#651214"  , fontWeight:"bold"}}
-            >Signup</a>
+            {token ? (
+              <button
+                onClick={logout}
+                className="signout-link text-decoration-none"
+                style={{ color: "#651214", fontWeight: "bold" }}
+              >
+                Log out
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="signout-link text-decoration-none"
+                  style={{ color: "#651214", fontWeight: "bold" }}
+                >
+                  Log in
+                </Link>
+                <Link
+                  to="/signup"
+                  className="signout-link text-decoration-none"
+                  style={{ color: "#651214", fontWeight: "bold" }}
+                >
+                  Signup
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

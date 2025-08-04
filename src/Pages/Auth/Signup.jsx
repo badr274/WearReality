@@ -1,108 +1,75 @@
-import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import "./Auth.css";
-export default function Signup() {
+import signupSchema from "../../validation/SignupShema";
+
+const Signup = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    rePassword: "",
-    phone: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(signupSchema),
   });
 
-  const [errors, setErrors] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const onSubmit = async (data) => {
+    try {
+      await axios.post(
+        "https://ecommerce.routemisr.com/api/v1/auth/signup",
+        data
+      );
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setErrors("");
-    setSuccessMessage("");
-
-    // Get existing users from localStorage
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-    // Check if email already exists
-    const userExists = existingUsers.some(
-      (user) => user.email === formData.email
-    );
-
-    if (userExists) {
-      setErrors("Account with this email already exists!");
-      return;
+      toast.success("Account created successfully! Redirecting to login...");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (error) {
+      const errMsg =
+        error.response?.data?.message || "Something went wrong. Try again.";
+      toast.error(errMsg);
     }
-
-    if (formData.password !== formData.rePassword) {
-      setErrors("Passwords do not match!");
-      return;
-    }
-
-    // Save new user to localStorage
-    const updatedUsers = [
-      ...existingUsers,
-      { email: formData.email, password: formData.password },
-    ];
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
-
-    setSuccessMessage("Account created successfully! Redirecting to Login...");
-
-    setTimeout(() => {
-      navigate("/login");
-    }, 2000);
   };
 
   return (
-    <div className="container mt-5">
-      <h1
-        className="text-center mb-4 fw-bold fst-italic"
-        // style={{ color: "#651214ff" }}
-      >
-        Sign Up
-      </h1>
-
-      {errors && <div className="alert alert-danger">{errors}</div>}
-      {successMessage && (
-        <div className="alert alert-success">{successMessage}</div>
-      )}
+    <div className="container mt-5 position-relative">
+      <h1 className="text-center mb-4 fw-bold fst-italic">Sign Up</h1>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="mx-auto"
         style={{ maxWidth: "50%" }}
       >
+        {/* name */}
         <div className="mb-3">
           <label className="form-label fw-bold" htmlFor="name">
             Name
           </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
+          <input id="name" className="form-control" {...register("name")} />
+          {errors.name && <p className="text-danger">{errors.name.message}</p>}
         </div>
 
+        {/* email */}
         <div className="mb-3">
           <label className="form-label fw-bold" htmlFor="email">
             Email
           </label>
           <input
-            type="email"
+            type="text"
             id="email"
-            name="email"
-            onChange={handleChange}
             className="form-control"
-            required
+            {...register("email")}
           />
+          {errors.email && (
+            <p className="text-danger">{errors.email.message}</p>
+          )}
         </div>
 
+        {/* password */}
         <div className="mb-3">
           <label className="form-label fw-bold" htmlFor="password">
             Password
@@ -110,13 +77,15 @@ export default function Signup() {
           <input
             type="password"
             id="password"
-            name="password"
-            onChange={handleChange}
             className="form-control"
-            required
+            {...register("password")}
           />
+          {errors.password && (
+            <p className="text-danger">{errors.password.message}</p>
+          )}
         </div>
 
+        {/* rePassword */}
         <div className="mb-3">
           <label className="form-label fw-bold" htmlFor="rePassword">
             Re-Enter Password
@@ -124,13 +93,15 @@ export default function Signup() {
           <input
             type="password"
             id="rePassword"
-            name="rePassword"
-            onChange={handleChange}
             className="form-control"
-            required
+            {...register("rePassword")}
           />
+          {errors.rePassword && (
+            <p className="text-danger">{errors.rePassword.message}</p>
+          )}
         </div>
 
+        {/* phone */}
         <div className="mb-3">
           <label className="form-label fw-bold" htmlFor="phone">
             Phone
@@ -138,18 +109,15 @@ export default function Signup() {
           <input
             type="text"
             id="phone"
-            name="phone"
-            onChange={handleChange}
             className="form-control"
-            required
+            {...register("phone")}
           />
+          {errors.phone && (
+            <p className="text-danger">{errors.phone.message}</p>
+          )}
         </div>
 
-        <button
-          type="submit"
-          className="btn w-100 fw-bold submit-btn"
-          // style={{ backgroundColor: "#651214ff", color: "white" }}
-        >
+        <button type="submit" className="btn w-100 fw-bold submit-btn">
           Signup
         </button>
       </form>
@@ -159,4 +127,6 @@ export default function Signup() {
       </p>
     </div>
   );
-}
+};
+
+export default Signup;
