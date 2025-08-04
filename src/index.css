@@ -1,3 +1,7 @@
+:root {
+  --main-color: #651214ff;
+  --secondary-color: #f6f2f2ff;
+}
 * {
   box-sizing: border-box;
   padding: 0;
