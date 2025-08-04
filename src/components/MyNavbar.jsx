@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 const MyNavbar = () => {
   const [activeLink, setActiveLink] = useState("home");
-
+  
   const navLinks = [
     { name: "Home", id: "home" },
     { name: "Cart", id: "cart" },
     { name: "Products", id: "products" },
-    { name: "Categories", id: "categories" },
+    { name: "About", id: "About" },
+    { name: "Contact", id: "Contact" },
   ];
-
+  
   const linkStyle = (id) => ({
     color: activeLink === id ? "#651214" : "#4d4d4d",
     textDecoration: "none",
     fontWeight: activeLink === id ? "600" : "normal",
     transition: "color 0.3s",
   });
-
+  
   return (
     <nav
       className="navbar  navbar-expand-lg border-bottom py-2 shadow-sm"
       style={{ backgroundColor: "#f6f2f2ff" }}
     >
-      <div className="container">
+  <div className="container d-flex justify-contenr-between">
         <a className="navbar-brand d-flex align-items-center" href="#">
           <i
             className="bi bi-cart-fill fs-4 me-2"
@@ -44,10 +45,10 @@ const MyNavbar = () => {
         </button>
 
         <div
-          className="collapse navbar-collapse justify-content-between ms-3"
+          className="collapse navbar-collapse justify-content-betweens "
           id="navbarContent"
         >
-          <ul className="navbar-nav mb-2 mb-lg-0 flex-lg-row gap-lg-3">
+          <ul className="navbar-nav mb-2 mb-lg-0 flex-lg-row gap-lg-3 me-lg-auto ms-lg-auto">
             {navLinks.map((link) => (
               <li className="nav-item" key={link.id}>
                 <a
@@ -111,61 +112,22 @@ const MyNavbar = () => {
                     onMouseEnter={(e) => (e.target.style.color = "#651214")}
                     onMouseLeave={(e) => (e.target.style.color = "#4d4d4d")}
                   >
-                    <i className="bi bi-tiktok"></i>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    style={{
-                      color: "#4d4d4d",
-                      fontSize: "1.2rem",
-                      transition: "color 0.3s",
-                    }}
-                    onMouseEnter={(e) => (e.target.style.color = "#651214")}
-                    onMouseLeave={(e) => (e.target.style.color = "#4d4d4d")}
-                  >
                     <i className="bi bi-twitter"></i>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    style={{
-                      color: "#4d4d4d",
-                      fontSize: "1.2rem",
-                      transition: "color 0.3s",
-                    }}
-                    onMouseEnter={(e) => (e.target.style.color = "#651214")}
-                    onMouseLeave={(e) => (e.target.style.color = "#4d4d4d")}
-                  >
-                    <i className="bi bi-linkedin"></i>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    style={{
-                      color: "#4d4d4d",
-                      fontSize: "1.2rem",
-                      transition: "color 0.3s",
-                    }}
-                    onMouseEnter={(e) => (e.target.style.color = "#651214")}
-                    onMouseLeave={(e) => (e.target.style.color = "#4d4d4d")}
-                  >
-                    <i className="bi bi-youtube"></i>
                   </a>
                 </li>
               </ul>
             </ul>
 
             <a
-              href="#signout"
+              href="/login"
               className="signout-link text-decoration-none"
-              style={{ color: "#651214" }}
-            >
-              Sign Up
-            </a>
+              style={{ color: "#651214", fontWeight:"bold" }}
+            >Log in </a>
+            <a
+              href="/signup"
+              className="signout-link text-decoration-none"
+              style={{ color: "#651214"  , fontWeight:"bold"}}
+            >Signup</a>
           </div>
         </div>
       </div>

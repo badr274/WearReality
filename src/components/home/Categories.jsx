@@ -45,7 +45,7 @@ const Categories = () => {
       </h2>
 
       <Swiper
-        className="categories-swiper"
+        className="categories-swiper my-swiper"
         modules={[Pagination, Autoplay]}
         spaceBetween={20}
         pagination={{ clickable: true }}
