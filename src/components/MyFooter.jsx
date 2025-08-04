@@ -7,35 +7,36 @@ const MyFooter = () => {
       style={{ backgroundColor: "#f6f2f2ff" }}
     >
       <Container>
+
+        
         <Row className="mb-4">
-          <Col xs={12}>
-            <h5>Get the Wear Reality</h5>
-            <p style={{ color: "#4d4d4dff" }}>
-              We are a modern company focused on delivering top-tier solutions
-              for our clients.
-            </p>
-          </Col>
-          <Col xs={12}>
-            <h5>Subscribe with your email</h5>
-            <p style={{ color: "#4d4d4dff" }}>
-              Stay updated with our latest offers and news.
-            </p>
-            <div className="d-flex">
-              <input
-                type="email"
-                className="form-control rounded-3 me-2"
-                placeholder="Enter your email"
-              />
-              <button
-                type="button"
-                className="btn text-white"
-                style={{ backgroundColor: "#651214", borderColor: "#651214" }}
-              >
-                Submit
-              </button>
-            </div>
-          </Col>
-        </Row>
+  
+  <Col xs={12}>
+    <h5>Get the Wear Reality</h5>
+    <p style={{ color: "#4d4d4dff" }}>
+      We are a modern company focused on delivering top-tier solutions for our clients.
+    </p>
+  </Col>
+
+ 
+  <Col xs={12}>
+    <div className="d-flex">
+      <input
+        type="email"
+        className="form-control rounded-3 me-2"
+        placeholder="Enter your email"
+      />
+      <button
+        type="button"
+        className="btn text-white"
+        style={{ backgroundColor: "#651214", borderColor: "#651214" }}
+      >
+        Submit
+      </button>
+    </div>
+  </Col>
+</Row>
+
 
         <hr />
 
