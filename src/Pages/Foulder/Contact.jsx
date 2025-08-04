@@ -12,12 +12,12 @@ const Contact = () => {
         </p>
 
         <form className="contact-form">
-          <label className="contact-label">BUSINESS EMAIL *</label>
+          <label className="contact-label"> EMAIL *</label>
           <div className="input-wrapper">
             <FaEnvelope className="icon" />
             <input
               type="email"
-              placeholder="Ex. yourname@company.com"
+              placeholder="Ex. yourname@gmail.com"
               required
             />
           </div>
