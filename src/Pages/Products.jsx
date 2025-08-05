@@ -32,8 +32,9 @@ const ProductCard = ({ product, addToCart, showButtons }) => {
             )}
           </div>
           {product.brand && (
-            <div className="d-flex align-items-center mb-2">
-              <img
+            <div className="d-flex align-items-center justify-content-between mb-2 ">
+         <div className="inner d-flex align-items-center ">
+               <img
                 src={product.brand.image}
                 alt={product.brand.name}
                 width="24"
@@ -41,11 +42,14 @@ const ProductCard = ({ product, addToCart, showButtons }) => {
                 className="rounded-circle me-2"
               />
               <span className="small">{product.brand.name}</span>
-            </div>
-          )}
-          <div className="small text-warning">
+         </div>
+                        <div className="small text-warning ">
             {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0} reviews)
           </div>
+            </div>
+            
+          )}
+
 
           {showButtons && (
             <div className="d-flex flex-wrap gap-2 mt-2">
@@ -130,7 +134,7 @@ export default function Products() {
   return (
     <div className="container mt-5">
       <div className="row">
-        {/* Sidebar for md+ screens */}
+        {/* Sidebar for md screens */}
         <div className="col-md-3 d-none d-md-block">
           <ul className="shadow-sm p-3" style={{ borderRadius: "5px", backgroundColor: 'white' }}>
             <li className='d-flex align-items-center justify-content-between mb-3'>
