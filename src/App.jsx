@@ -10,7 +10,6 @@ import PersistLogin from "./components/routes/PersistLogin";
 import Contact from "./Pages/contact/Contact";
 import Cart from "./Pages/cart/Cart";
 
-
 function App() {
   return (
     <>
@@ -19,11 +18,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/cart" element={<Cart />} />
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
-          <Route path="/products" element={<Products />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/cart" element={<Cart />} />
         </Route>
       </Routes>
       <MyFooter />
