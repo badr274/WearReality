@@ -5,7 +5,7 @@ const MyNavbar = () => {
   const navLinks = [
     { name: "Home", id: "home", href: "/home" },
     { name: "Cart", id: "cart", href: "/cart" },
-    { name: "Products", id: "products", href: "/product" },
+    { name: "Products", id: "products", href: "/products" },
     { name: "About", id: "About", href: "/about" },
     { name: "Contact", id: "Contact", href: "/contact" },
   ];
@@ -52,7 +52,7 @@ const MyNavbar = () => {
             {navLinks.map((link) => (
               <li className="nav-item" key={link.id}>
                 <a
-                  href={`#${link.href}`}
+                  href={`${link.href}`}
                   style={linkStyle(link.id)}
                   onClick={() => setActiveLink(link.id)}
                   onMouseEnter={(e) => {
@@ -71,7 +71,6 @@ const MyNavbar = () => {
           </ul>
 
           <div className="d-flex gap-3 mt-3 mt-lg-0  flex-column flex-lg-row">
-            <ul className="d-flex list-unstyled mb-0 gap-3">
               <ul className="d-flex list-unstyled mb-0 gap-3">
                 <li>
                   <a
@@ -116,8 +115,6 @@ const MyNavbar = () => {
                   </a>
                 </li>
               </ul>
-            </ul>
-
             <a
               href="/login"
               className="signout-link text-decoration-none"
