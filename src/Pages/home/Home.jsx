@@ -1,12 +1,12 @@
-import ProductCard from "../../components/ProductCard";
+
 import Categories from "../../components/home/Categories";
-import Card from "../..//ProductCard";
 import "./home.css";
+import LatestProduct from "../../components/home/LatestProduct";
 const Home = () => {
   return (
     <div>
       <Categories />
-      <ProductCard />
+      <LatestProduct/>
     </div>
   );
 };
