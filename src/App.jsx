@@ -7,6 +7,9 @@ import MyFooter from "./components/MyFooter";
 import About from "./Pages/About/About";
 import PersistLogin from "./components/routes/PersistLogin";
 import Contact from "./Pages/contact/Contact";
+import Cart from "./Pages/cart/Cart";
+
+
 function App() {
   return (
     <>
@@ -18,6 +21,7 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/cart" element={<Cart />} />
         </Route>
       </Routes>
       <MyFooter />
