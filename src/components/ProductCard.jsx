@@ -21,34 +21,38 @@ const ProductCard = ({ product, inProductPage = false }) => {
               ? product.description
               : `${product.description.slice(0, 80)}...`}
           </p>
-          <div className="mt-auto">
-            <div className="mb-2">
-              <span className="fw-bold text-success">
-                EGP {product.priceAfterDiscount || product.price}
-              </span>
-              {product.priceAfterDiscount && (
-                <span className="text-muted text-decoration-line-through ms-2">
-                  EGP {product.price}
+          <div className="mt-auto d-flex justify-content-between align-items-center">
+            <div>
+              <div className="mb-1">
+                <span className="fw-bold text-success">
+                  EGP {product.priceAfterDiscount || product.price}
                 </span>
+                {product.priceAfterDiscount && (
+                  <span className="text-muted text-decoration-line-through ms-2">
+                    EGP {product.price}
+                  </span>
+                )}
+              </div>
+              {product.brand && (
+                <div className="d-flex align-items-center">
+                  <img
+                    src={product.brand.image}
+                    alt={product.brand.name}
+                    width="24"
+                    height="24"
+                    className="rounded-circle me-2"
+                  />
+                  <span className="small">{product.brand.name}</span>
+                </div>
               )}
             </div>
-            {product.brand && (
-              <div className="d-flex align-items-center mb-2">
-                <img
-                  src={product.brand.image}
-                  alt={product.brand.name}
-                  width="24"
-                  height="24"
-                  className="rounded-circle me-2"
-                />
-                <span className="small">{product.brand.name}</span>
-              </div>
-            )}
-            <div className="small text-warning">
-              {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0}{" "}
-              reviews)
+
+            <div className="small text-warning ms-2">
+              {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0} reviews)
             </div>
           </div>
+
+
           {inProductPage ? <button>Add to cart</button> : null}
         </div>
       </div>
