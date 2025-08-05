@@ -23,7 +23,7 @@ const Cart = () => {
         </div>
       ) : (
         <div className="container py-5">
-          <h2 className="mb-4 text-white">Your Cart</h2>
+          <h2 className="mb-4 text-dark">Your Cart</h2>
           {cartItems.map((item) => (
             <div key={item.id} className="card mb-3">
               <div className="row g-0">
@@ -70,4 +70,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Cart;
