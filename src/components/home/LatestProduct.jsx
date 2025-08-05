@@ -23,7 +23,9 @@ export default function LatestProduct() {
       </h2>
       <div className="row">
         {products.map((product, i) => (
-          <ProductCard product={product} key={i} />
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={i}>
+            <ProductCard product={product} showButtons={false} />
+          </div>
         ))}
       </div>
     </div>
