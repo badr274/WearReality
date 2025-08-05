@@ -7,6 +7,7 @@ import MyNavbar from "./components/MyNavbar";
 import MyFooter from "./components/MyFooter";
 import About from "./Pages/About/About";
 import PersistLogin from "./components/routes/PersistLogin";
+import ProtectedRoutes from "./components/routes/ProtectedRoutes";
 import Contact from "./Pages/contact/Contact";
 import Cart from "./Pages/cart/Cart";
 
@@ -19,7 +20,10 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/cart" element={<Cart />} />
+        </Route>
+
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

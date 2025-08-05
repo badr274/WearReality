@@ -1,32 +1,29 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { CartContext } from "../context/CartContext";
-import toast from "react-hot-toast";
-
+import { AuthContext } from "../context/AuthContext";
+import Swal from "sweetalert2";
 const ProductCard = ({ product, showButtons = false }) => {
+  const { token } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { setCartItems } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
   const handleAddToCart = (product) => {
-    setCartItems((prev) => {
-      const existingItemIndex = prev.findIndex(
-        (item) => item.product._id === product._id
-      );
-      if (existingItemIndex !== -1) {
-        const updatedCart = [...prev];
-        updatedCart[existingItemIndex].quantity += 1;
-        return updatedCart;
-      }
-
-      return [
-        ...prev,
-        {
-          quantity: 1,
-          product: product,
-        },
-      ];
-    });
-    toast.success("Product Added to Cart Successfully!");
+    if (!token) {
+      Swal.fire({
+        title: "Login Required",
+        text: "You need to log in first to add this product to your cart.",
+        icon: "warning",
+        confirmButtonText: "Go to Login",
+        confirmButtonColor: "#651214ff",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+      return;
+    }
+    addToCart(product);
   };
 
   return (
