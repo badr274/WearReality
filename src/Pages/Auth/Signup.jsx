@@ -1,108 +1,123 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import "./Auth.css";
+import signupSchema from "../../validation/SignupShema";
 
-export default function Signup() {
+const Signup = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    rePassword: '',
-    phone: '',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(signupSchema),
   });
 
-  const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState('');
+  const onSubmit = async (data) => {
+    try {
+      await axios.post(
+        "https://ecommerce.routemisr.com/api/v1/auth/signup",
+        data
+      );
 
-  const validationRules = {
-    name: (value) => /^[A-Za-z]+(\s[A-Za-z]+)+$/.test(value) ? '' : 'Name must be at least two words',
-    email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : 'Invalid Email Address',
-    password: (value) => /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(value) ? '' : 'Password must be at least 8 characters with uppercase, number, and symbol',
-    rePassword: (value) => value === formData.password ? '' : 'Passwords do not match',
-    phone: (value) => /^01[0125][0-9]{8}$/.test(value) ? '' : 'Phone must be 11 digits starting with 01',
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    // Validate While Typing 
-    const fieldName = e.target.name;
-    const error = validationRules[fieldName](e.target.value);
-    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: error }));
-  };
-
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    const error = validationRules[name](value);
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSuccessMessage('');
-
-    const newErrors = {};
-    for (const field in formData) {
-      const error = validationRules[field](formData[field]);
-      if (error) {
-        newErrors[field] = error;
-      }
+      toast.success("Account created successfully! Redirecting to login...");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (error) {
+      const errMsg =
+        error.response?.data?.message || "Something went wrong. Try again.";
+      toast.error(errMsg);
     }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-    const userExists = existingUsers.some((user) => user.email === formData.email);
-
-    if (userExists) {
-      setErrors({ email: 'Account with this email already exists!' });
-      return;
-    }
-
-    const updatedUsers = [...existingUsers, { email: formData.email, password: formData.password }];
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
-
-    setSuccessMessage('Account created successfully! Redirecting to Login...');
-    setTimeout(() => {
-      navigate('/login');
-    }, 2000);
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4 fw-bold fst-italic" style={{ color: '#651214ff' }}>Sign Up</h2>
+    <div className="container mt-5 position-relative">
+      <h1 className="text-center mb-4 fw-bold fst-italic">Sign Up</h1>
 
-      {successMessage && <div className="alert alert-success">{successMessage}</div>}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mx-auto"
+        style={{ maxWidth: "50%" }}
+      >
+        {/* name */}
+        <div className="mb-3">
+          <label className="form-label fw-bold" htmlFor="name">
+            Name
+          </label>
+          <input id="name" className="form-control" {...register("name")} />
+          {errors.name && <p className="text-danger">{errors.name.message}</p>}
+        </div>
 
-      <form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: '50%' }}>
-        {['name', 'email', 'password', 'rePassword', 'phone'].map((field) => (
-          <div className="mb-3" key={field}>
-            <label className="form-label fw-bold" htmlFor={field}>
-              {field === 'rePassword' ? 'Re-Enter Password' : field.charAt(0).toUpperCase() + field.slice(1)}
-            </label>
-            <input
-              type={field.includes('password') ? 'password' : 'text'}
-              id={field}
-              name={field}
-              value={formData[field]}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={`form-control ${errors[field] ? 'is-invalid' : ''}`}
-              required
-            />
-            {errors[field] && (
-              <div className="invalid-feedback" style={{ display: 'block' }}>
-                {errors[field]}
-              </div>
-            )}
-          </div>
-        ))}
+        {/* email */}
+        <div className="mb-3">
+          <label className="form-label fw-bold" htmlFor="email">
+            Email
+          </label>
+          <input
+            type="text"
+            id="email"
+            className="form-control"
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-danger">{errors.email.message}</p>
+          )}
+        </div>
 
-        <button type="submit" className="btn w-100 fw-bold" style={{ backgroundColor: '#651214ff', color: 'white' }}>
+        {/* password */}
+        <div className="mb-3">
+          <label className="form-label fw-bold" htmlFor="password">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="form-control"
+            {...register("password")}
+          />
+          {errors.password && (
+            <p className="text-danger">{errors.password.message}</p>
+          )}
+        </div>
+
+        {/* rePassword */}
+        <div className="mb-3">
+          <label className="form-label fw-bold" htmlFor="rePassword">
+            Re-Enter Password
+          </label>
+          <input
+            type="password"
+            id="rePassword"
+            className="form-control"
+            {...register("rePassword")}
+          />
+          {errors.rePassword && (
+            <p className="text-danger">{errors.rePassword.message}</p>
+          )}
+        </div>
+
+        {/* phone */}
+        <div className="mb-3">
+          <label className="form-label fw-bold" htmlFor="phone">
+            Phone
+          </label>
+          <input
+            type="text"
+            id="phone"
+            className="form-control"
+            {...register("phone")}
+          />
+          {errors.phone && (
+            <p className="text-danger">{errors.phone.message}</p>
+          )}
+        </div>
+
+        <button type="submit" className="btn w-100 fw-bold submit-btn">
           Signup
         </button>
       </form>
@@ -112,4 +127,6 @@ export default function Signup() {
       </p>
     </div>
   );
-}
+};
+
+export default Signup;
