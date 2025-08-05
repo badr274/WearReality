@@ -15,7 +15,7 @@ const ProductCard = ({ product, inProductPage = false }) => {
           style={{ height: "250px", objectFit: "cover" }}
         />
         <div className="card-body d-flex flex-column">
-          <h5 className="card-title fw-bold ">{product.title}</h5>
+          <h5 style={{color:"rgba(85, 86, 88, 1)"}} className="card-title fw-bold ">{product.title}</h5>
           <p className="card-text text-muted small">
             {product.description.length < 80
               ? product.description
