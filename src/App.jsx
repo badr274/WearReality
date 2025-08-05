@@ -18,7 +18,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
-          <Route path="/Products" element={<Products />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/signup" element={<Signup />} />
         </Route>
       </Routes>

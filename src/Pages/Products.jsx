@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product, addToCart, showButtons }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="card h-100 shadow-sm" style={{ boxShadow: "0 25px 50px rgba(74, 74, 74, 0.69)", border: "none" }}>
+    <div
+      className="card h-100 shadow-sm"
+      style={{
+        boxShadow: "0 25px 50px rgba(74, 74, 74, 0.69)",
+        border: "none",
+      }}
+    >
       <img
         src={product.imageCover || product.images?.[0]}
         className="card-img-top w-100"
@@ -44,22 +50,23 @@ const ProductCard = ({ product, addToCart, showButtons }) => {
             </div>
           )}
           <div className="small text-warning">
-            {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0} reviews)
+            {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0}{" "}
+            reviews)
           </div>
 
           {showButtons && (
             <div className="d-flex flex-wrap gap-2 mt-2">
               <button
                 className="btn flex-grow-1"
-                style={{ backgroundColor: '#651214ff', color: "white" }}
-                onClick={() => navigate(`/product/${product._id}`)}
+                style={{ backgroundColor: "#651214ff", color: "white" }}
+                onClick={() => addToCart(product)}
               >
                 Add to Cart
               </button>
               <button
                 className="btn flex-grow-1"
-                style={{ backgroundColor: 'rgb(89, 92, 95)', color: "white" }}
-                onClick={() => addToCart(product)}
+                style={{ backgroundColor: "rgb(89, 92, 95)", color: "white" }}
+                onClick={() => navigate(`/products/${product._id}`)}
               >
                 Details
               </button>
@@ -74,21 +81,25 @@ const ProductCard = ({ product, addToCart, showButtons }) => {
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [loading, setLoading] = useState(false);
-  const location = useLocation();
 
-  const fetchProducts = (category = '') => {
+  const fetchProducts = (category = "") => {
     setLoading(true);
-    let url = 'https://ecommerce.routemisr.com/api/v1/products';
-    axios.get(url)
-      .then(response => {
+    let url = "https://ecommerce.routemisr.com/api/v1/products";
+    axios
+      .get(url)
+      .then((response) => {
         const allProducts = response.data.data;
-        const uniqueCategories = [...new Set(allProducts.map(p => p.category.name))];
+        const uniqueCategories = [
+          ...new Set(allProducts.map((p) => p.category.name)),
+        ];
         setCategories(uniqueCategories);
 
-        if (category && category !== 'all') {
-          const filtered = allProducts.filter(p => p.category.name === category);
+        if (category && category !== "all") {
+          const filtered = allProducts.filter(
+            (p) => p.category.name === category
+          );
           setProducts(filtered);
         } else {
           setProducts(allProducts);
@@ -96,15 +107,15 @@ export default function Products() {
 
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching products:', error);
+      .catch((error) => {
+        console.error("Error fetching products:", error);
         setLoading(false);
       });
   };
 
   const addToCart = (product) => {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const productExists = cart.find(item => item._id === product._id);
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const productExists = cart.find((item) => item._id === product._id);
 
     if (productExists) {
       productExists.quantity += 1;
@@ -112,7 +123,7 @@ export default function Products() {
       cart.push({ ...product, quantity: 1 });
     }
 
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
     alert(`${product.title} added to cart!`);
   };
 
@@ -125,31 +136,49 @@ export default function Products() {
     fetchProducts();
   }, []);
 
-  const showButtons = location.pathname.startsWith('/product') || location.pathname === '/products';
-
   return (
     <div className="container mt-5">
       <div className="row">
         {/* Sidebar for md+ screens */}
         <div className="col-md-3 d-none d-md-block">
-          <ul className="shadow-sm p-3" style={{ borderRadius: "5px", backgroundColor: 'white' }}>
-            <li className='d-flex align-items-center justify-content-between mb-3'>
-              <h2 className='fs-4 m-0' style={{ color: "#651214ff" }}>Filter</h2>
-              <i className="bi bi-filter fs-5" style={{ color: "#651214ff" }}></i>
+          <ul
+            className="shadow-sm p-3"
+            style={{ borderRadius: "5px", backgroundColor: "white" }}
+          >
+            <li className="d-flex align-items-center justify-content-between mb-3">
+              <h2 className="fs-4 m-0" style={{ color: "#651214ff" }}>
+                Filter
+              </h2>
+              <i
+                className="bi bi-filter fs-5"
+                style={{ color: "#651214ff" }}
+              ></i>
             </li>
             <li
-              className={`list-group-item ${selectedCategory === 'all' ? 'fw-bold' : ''}`}
-              onClick={() => handleCategoryClick('all')}
-              style={{ cursor: 'pointer', color: "#651214ff", paddingBlock: "10px" }}
+              className={`list-group-item ${
+                selectedCategory === "all" ? "fw-bold" : ""
+              }`}
+              onClick={() => handleCategoryClick("all")}
+              style={{
+                cursor: "pointer",
+                color: "#651214ff",
+                paddingBlock: "10px",
+              }}
             >
               All Categories
             </li>
-            {categories.map(category => (
+            {categories.map((category) => (
               <li
                 key={category}
-                className={`list-group-item ${selectedCategory === category ? 'fw-bold' : ''}`}
+                className={`list-group-item ${
+                  selectedCategory === category ? "fw-bold" : ""
+                }`}
                 onClick={() => handleCategoryClick(category)}
-                style={{ cursor: 'pointer', color: "#651214ff", paddingBlock: "8px" }}
+                style={{
+                  cursor: "pointer",
+                  color: "#651214ff",
+                  paddingBlock: "8px",
+                }}
               >
                 {category}
               </li>
@@ -166,27 +195,34 @@ export default function Products() {
               id="dropdownMenuButton"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              style={{ backgroundColor: '#651214ff', color: 'white' }}
+              style={{ backgroundColor: "#651214ff", color: "white" }}
             >
               Filter
               <i className="bi bi-list fs-5"></i>
             </button>
-            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+            <ul
+              className="dropdown-menu w-100"
+              aria-labelledby="dropdownMenuButton"
+            >
               <li>
                 <span
-                  className={`dropdown-item ${selectedCategory === 'all' ? 'fw-bold' : ''}`}
-                  onClick={() => handleCategoryClick('all')}
-                  style={{ cursor: 'pointer' }}
+                  className={`dropdown-item ${
+                    selectedCategory === "all" ? "fw-bold" : ""
+                  }`}
+                  onClick={() => handleCategoryClick("all")}
+                  style={{ cursor: "pointer" }}
                 >
                   All Categories
                 </span>
               </li>
-              {categories.map(category => (
+              {categories.map((category) => (
                 <li key={category}>
                   <span
-                    className={`dropdown-item ${selectedCategory === category ? 'fw-bold' : ''}`}
+                    className={`dropdown-item ${
+                      selectedCategory === category ? "fw-bold" : ""
+                    }`}
                     onClick={() => handleCategoryClick(category)}
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: "pointer" }}
                   >
                     {category}
                   </span>
@@ -198,11 +234,17 @@ export default function Products() {
 
         {/* Product Grid */}
         <div className="col-12 col-md-9">
-          <h2 style={{ color: "#651214ff" }} className="fw-bold mb-4">{selectedCategory === 'all' ? 'All Products' : selectedCategory}</h2>
+          <h2 style={{ color: "#651214ff" }} className="fw-bold mb-4">
+            {selectedCategory === "all" ? "All Products" : selectedCategory}
+          </h2>
           <div className="row g-4">
-            {products.map(product => (
+            {products.map((product) => (
               <div key={product._id} className="col-12 col-sm-6 col-lg-4">
-                <ProductCard product={product} addToCart={addToCart} showButtons={true} />
+                <ProductCard
+                  product={product}
+                  addToCart={addToCart}
+                  showButtons={true}
+                />
               </div>
             ))}
           </div>
