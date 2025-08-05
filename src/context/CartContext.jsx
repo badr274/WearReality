@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext({});
@@ -34,12 +35,12 @@ const CartProvider = ({ children }) => {
       return [
         ...prev,
         {
-          itemId: crypto.randomUUID(),
           quantity: 1,
           product: product,
         },
       ];
     });
+    toast.success("Product add to cart successfully!");
   };
 
   return (
