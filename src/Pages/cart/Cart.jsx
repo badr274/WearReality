@@ -14,10 +14,10 @@ const Cart = () => {
             src={img}
             alt="Empty Cart"
             className="my-4"
-            style={{ width: "500px" }}
+            style={{ width: "400px" }}
           />
-          <h4 className="text-white mb-3">Your cart is empty</h4>
-          <Link to="/Products" className="btn btn-success text-white">
+          
+          <Link to="/Products" className="btn btn-success text-white" style={{ backgroundColor: "#651214", borderColor: "#651214" }}>
             Go Shopping
           </Link>
         </div>
@@ -32,6 +32,7 @@ const Cart = () => {
                     src={item.image}
                     className="img-fluid"
                     alt={item.name}
+                   
                   />
                 </div>
                 <div className="col-md-8">

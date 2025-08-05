@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/home/Home";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
+import Products from "./Pages/Products";
 import MyNavbar from "./components/MyNavbar";
 import MyFooter from "./components/MyFooter";
 import About from "./Pages/About/About";
@@ -20,6 +21,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<Cart />} />
         </Route>
