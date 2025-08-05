@@ -50,9 +50,12 @@ const ProductCard = ({ product, addToCart, showButtons }) => {
           {showButtons && (
             <div className="d-flex flex-wrap gap-2 mt-2">
               <button
-                className="btn flex-grow-1"
-                style={{ backgroundColor: '#651214ff', color: "white" }}
-                onClick={() => navigate(`/product/${product._id}`)}
+              className="btn flex-grow-1"
+              style={{ backgroundColor: '#651214ff', color: "white" }}
+              onClick={() => {
+                addToCart(product);     // تُخزن المنتج في الـ localStorage
+                navigate('/cart');      // ينقل المستخدم لصفحة الكارت
+              }}
               >
                 Add to Cart
               </button>
