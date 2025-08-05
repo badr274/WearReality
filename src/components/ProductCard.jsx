@@ -30,6 +30,7 @@ const ProductCard = ({ product, showButtons = false }) => {
   };
 
   return (
+ 
     <div
       className="card h-100 shadow-sm"
       style={{
