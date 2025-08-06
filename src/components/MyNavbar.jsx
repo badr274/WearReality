@@ -13,6 +13,7 @@ const MyNavbar = () => {
     { name: "Products", id: "products", href: "/products" },
     { name: "About", id: "About", href: "/about" },
     { name: "Contact", id: "Contact", href: "/contact" },
+    { name: "Wishlist", id: "Wishlist", href: "/wishlist" },
     ...(token && role === "admin"
       ? [{ name: "Dashboard", id: "dashboard", href: "/dashboard" }]
       : []),

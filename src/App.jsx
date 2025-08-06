@@ -11,6 +11,8 @@ import PersistLogin from "./components/routes/PersistLogin";
 import ProtectedRoutes from "./components/routes/ProtectedRoutes";
 import Contact from "./Pages/contact/Contact";
 import Cart from "./Pages/cart/Cart";
+import ProductDetails from "./Pages/ProductDetails";
+import WishList from "./Pages/wishlist/WishList";
 
 // Dashboard Layout & Pages
 import Layout from "./components/Layout";
@@ -31,6 +33,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/wishlist" element={<WishList />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/cart" element={<Cart />} />
         </Route>
@@ -45,11 +49,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
-          {/* Dashboard Routes Nested under Layout */}
         </Route>
 
-        {/* Redirect any unknown routes to Home */}
         <Route path="*" element={<PageNotFound/>} />
+
       </Routes>
       {!isDashboardRoute && <MyFooter />}
     </>
