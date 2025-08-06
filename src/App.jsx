@@ -9,6 +9,7 @@ import About from "./Pages/About/About";
 import PersistLogin from "./components/routes/PersistLogin";
 import Contact from "./Pages/contact/Contact";
 import Cart from "./Pages/cart/Cart";
+import PaymentPage from "./components/payment";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
