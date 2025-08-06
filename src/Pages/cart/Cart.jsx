@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 import img from '../cart/img.jpg';
 import { Link } from 'react-router-dom';
+import CartItemComponent from '../../components/cart/CartItemComponent';
 
 const Cart = () => {
-  const { cartItems, updateQuantity } = useContext(CartContext);
+  const { cartItems } = useContext(CartContext);
 
   return (
     <div className="">
@@ -23,51 +24,19 @@ const Cart = () => {
         </div>
       ) : (
         <div className="container py-5">
-          <h2 className="mb-4 text-dark">Your Cart</h2>
-          {cartItems.map((item) => (
-            <div key={item.id} className="card mb-3">
-              <div className="row g-0">
-                <div className="col-md-4">
-                  <img
-                    src={item.image}
-                    className="img-fluid"
-                    alt={item.name}
-                   
-                  />
-                </div>
-                <div className="col-md-8">
-                  <div className="card-body">
-                    <h5 className="card-title">{item.name}</h5>
-                    <p className="card-text">Price: {item.price} EGP</p>
+          <h2 className="mb-4 text-white">Your Cart</h2>
+          <div>
+            {
+              cartItems.map((item)=>
+              (<CartItemComponent cartItem={item}/>)
+              )
+            }
 
-                    <div className="d-flex align-items-center mb-2">
-                      <button
-                        className="btn btn-outline-secondary btn-sm"
-                        onClick={() => updateQuantity(item.id, -1)}
-                      >
-                        -
-                      </button>
-                      <span className="mx-3">{item.quantity}</span>
-                      <button
-                        className="btn btn-outline-secondary btn-sm"
-                        onClick={() => updateQuantity(item.id, 1)}
-                      >
-                        +
-                      </button>
-                    </div>
-
-                    <p className="card-text fw-bold">
-                      Total: {item.price * item.quantity} EGP
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-export default Cart;
+export default Cart;

@@ -4,7 +4,16 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState("");
+  const getStoredToken = () => {
+    try {
+      const stored = localStorage.getItem("token");
+      return stored ? stored : null;
+    } catch (err) {
+      console.error("Invalid token in localStorage", err);
+      return null;
+    }
+  };
+  const [token, setToken] = useState(getStoredToken);
   console.log(token);
   const login = (newToken) => {
     setToken(newToken);
