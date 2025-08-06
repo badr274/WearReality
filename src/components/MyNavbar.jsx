@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 
 const MyNavbar = () => {
   const { token, logout } = useContext(AuthContext);
+  const role = localStorage.getItem("role");
   const [activeLink, setActiveLink] = useState("home");
 
   const navLinks = [
@@ -13,6 +14,9 @@ const MyNavbar = () => {
     { name: "About", id: "About", href: "/about" },
     { name: "Contact", id: "Contact", href: "/contact" },
     { name: "Wishlist", id: "Wishlist", href: "/wishlist" },
+    ...(token && role === "admin"
+      ? [{ name: "Dashboard", id: "dashboard", href: "/dashboard" }]
+      : []),
   ];
 
   const linkStyle = (id) => ({
