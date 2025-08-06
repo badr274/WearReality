@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card, Spinner, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 
 const Customers = () => {
- const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Customers = () => {
 
   return (
     <Container className="mt-4">
-      <h2 className="fw-bold  mb-4" style={{ color: 'rgb(101, 18, 20)' }}>Customers</h2>
+      <h2 className="fw-bold mb-4" style={{ color: 'rgb(101, 18, 20)' }}>Customers</h2>
 
       {loading ? (
         <div className="text-center">
@@ -32,8 +32,8 @@ const Customers = () => {
         </div>
       ) : (
         <>
-          {/* Table Headers */}
-          <Row className="mb-3 fw-bold ms-5" style={{ color: 'rgb(101, 18, 20)' }}>
+          {/* Table Headers - تظهر فقط على الشاشات الكبيرة */}
+          <Row className="fw-bold d-none d-md-flex text-dark mb-3">
             <Col md={4}>Name</Col>
             <Col md={4}>Email</Col>
             <Col md={4}>Registered</Col>
@@ -41,10 +41,16 @@ const Customers = () => {
 
           {/* Customer Data */}
           {users.map(user => (
-            <Row key={user._id} className="align-items-center mb-3 ms-5">
-              <Col md={4}>{user.name}</Col>
-              <Col md={4}>{user.email}</Col>
-              <Col md={4}>{new Date(user.createdAt).toLocaleDateString()}</Col>
+            <Row key={user._id} className="align-items-center mb-3 border rounded p-2 mx-0">
+              <Col xs={12} md={4}>
+                <strong className="d-md-none">Name: </strong>{user.name}
+              </Col>
+              <Col xs={12} md={4}>
+                <strong className="d-md-none">Email: </strong>{user.email}
+              </Col>
+              <Col xs={12} md={4}>
+                <strong className="d-md-none">Registered: </strong>{new Date(user.createdAt).toLocaleDateString()}
+              </Col>
             </Row>
           ))}
         </>
