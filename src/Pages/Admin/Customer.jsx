@@ -32,14 +32,14 @@ const Customers = () => {
         </div>
       ) : (
         <>
-          {/* Table Headers - تظهر فقط على الشاشات الكبيرة */}
+          
           <Row className="fw-bold d-none d-md-flex text-dark mb-3">
             <Col md={4}>Name</Col>
             <Col md={4}>Email</Col>
             <Col md={4}>Registered</Col>
           </Row>
 
-          {/* Customer Data */}
+         
           {users.map(user => (
             <Row key={user._id} className="align-items-center mb-3 border rounded p-2 mx-0">
               <Col xs={12} md={4}>
