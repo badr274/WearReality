@@ -1,4 +1,4 @@
-const ProductCard = ({ product, inProductPage = false }) => {
+export default function ProductCard ({ product, inProductPage = false }){
   return (
     <div key={product._id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
       <div
@@ -58,6 +58,4 @@ const ProductCard = ({ product, inProductPage = false }) => {
       </div>
     </div>
   );
-};
-
-export default ProductCard;
+}
