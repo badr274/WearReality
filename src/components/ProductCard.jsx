@@ -124,6 +124,6 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
       </div>
     </div>
   );
-};
+}
 
-export default ProductCard;
+export default ProductCard

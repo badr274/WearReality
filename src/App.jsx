@@ -20,6 +20,7 @@ import Dashboard from "./Pages/Admin/Dashboard";
 import Analytics from "./Pages/Admin/Analytics";
 import Customer from "./Pages/Admin/Customer";
 import ProtectedDashboard from "./components/routes/ProtectedDashboard";
+import PageNotFound from "./Pages/pageNotFound/PageNotFound";
 
 function App() {
   const location = useLocation();
@@ -48,11 +49,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
-          {/* Dashboard Routes Nested under Layout */}
         </Route>
 
-        {/* Redirect any unknown routes to Home */}
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<PageNotFound/>} />
+
       </Routes>
       {!isDashboardRoute && <MyFooter />}
     </>
