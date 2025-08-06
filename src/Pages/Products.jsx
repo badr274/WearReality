@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
@@ -164,7 +163,7 @@ export default function Products() {
           </h2>
           <div className="row">
             {products.map((product) => (
-              <div key={product._id} className="col-12 col-sm-6 col-lg-4">
+              <div key={product._id} className="col-12 col-sm-6 col-lg-4 mb-4">
                 <ProductCard product={product} showButtons={true} />
               </div>
             ))}

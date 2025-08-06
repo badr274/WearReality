@@ -17,11 +17,11 @@ import Layout from "./components/Layout";
 import Dashboard from "./Pages/Admin/Dashboard";
 import Analytics from "./Pages/Admin/Analytics";
 import Customer from "./Pages/Admin/Customer";
+import ProtectedDashboard from "./components/routes/ProtectedDashboard";
 
 function App() {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith("/dashboard");
-
   return (
     <>
       {!isDashboardRoute && <MyNavbar />}
@@ -33,10 +33,12 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/cart" element={<Cart />} />
         </Route>
-        <Route path="/dashboard" element={<Layout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="analytics" element={<Analytics />} />
-          <Route path="customer" element={<Customer />} />
+        <Route element={<ProtectedDashboard />}>
+          <Route path="/dashboard" element={<Layout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="customer" element={<Customer />} />
+          </Route>
         </Route>
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
@@ -46,7 +48,7 @@ function App() {
         </Route>
 
         {/* Redirect any unknown routes to Home */}
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<Navigate to="/page404" />} />
       </Routes>
       {!isDashboardRoute && <MyFooter />}
     </>
