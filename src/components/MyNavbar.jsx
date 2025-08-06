@@ -9,7 +9,7 @@ const MyNavbar = () => {
   const navLinks = [
     { name: "Home", id: "home", href: "/" },
     { name: "Cart", id: "cart", href: "/cart" },
-    { name: "Products", id: "products", href: "/product" },
+    { name: "Products", id: "products", href: "/products" },
     { name: "About", id: "About", href: "/about" },
     { name: "Contact", id: "Contact", href: "/contact" },
   ];

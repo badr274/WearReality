@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import React from "react";
 import Home from "./Pages/home/Home";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
@@ -8,21 +9,42 @@ import MyFooter from "./components/MyFooter";
 import About from "./Pages/About/About";
 import PersistLogin from "./components/routes/PersistLogin";
 import Contact from "./Pages/contact/Contact";
+
+// Dashboard Layout & Pages
+import Layout from "./components/Layout";
+import Dashboard from "./Pages/Admin/Dashboard";
+import Analytics from "./Pages/Admin/Analytics";
+import Customer from "./Pages/Admin/Customer";
+
 function App() {
+  const location = useLocation();
+  const isDashboardRoute = location.pathname.startsWith("/dashboard");
+
   return (
     <>
-      <MyNavbar />
+      {!isDashboardRoute && <MyNavbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
-          <Route path="/Products" element={<Products />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/products" element={<Products />} />
+
+          {/* Dashboard Routes Nested under Layout */}
+          <Route path="/dashboard" element={<Layout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="customer" element={<Customer />} />
+          </Route>
         </Route>
+
+        {/* Redirect any unknown routes to Home */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-      <MyFooter />
+      {!isDashboardRoute && <MyFooter />}
     </>
   );
 }
