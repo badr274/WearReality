@@ -64,7 +64,7 @@ export default function Products() {
   return (
     <div className="container mt-5">
       <div className="row">
-        {/* Sidebar for md+ screens */}
+        {/* Sidebar for md screens */}
         <div className="col-md-3 d-none d-md-block">
           <ul
             className="shadow-sm p-3"
