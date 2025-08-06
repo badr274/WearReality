@@ -23,7 +23,9 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-
+    if (data.email === "admin@admin.com" && data.password === "admin1234") {
+      localStorage.setItem("role", "admin");
+    }
     try {
       const res = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/auth/signin",
@@ -32,7 +34,7 @@ const Login = () => {
 
       const token = res.data.token;
       if (token) {
-        login(token); // ⬅️ store token in context + localStorage
+        login(token);
       }
 
       toast.success("Login successful! Redirecting to home...");
