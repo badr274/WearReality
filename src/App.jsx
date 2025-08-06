@@ -52,7 +52,7 @@ function App() {
         </Route>
 
         {/* Redirect any unknown routes to Home */}
-        <Route path="*" element={<Navigate to="/page404" />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       {!isDashboardRoute && <MyFooter />}
     </>

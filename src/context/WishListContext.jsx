@@ -23,14 +23,29 @@ const WishListProvider = ({ children }) => {
 
   const addToWishlist = (product) => {
     setWishlistItems((prev) => {
+      const exists = prev.some((item) => item.id === product.id);
+      if (exists) {
+        toast.error("Product already in wishlist!");
+        return prev;
+      } else {
+        toast.success("Product added to wishlist successfully!");
+      }
       return [...prev, product];
     });
-    toast.success("Product added to wishlist successfully!");
+  };
+
+  const removeFromWishlist = (productId) => {
+    setWishlistItems((prev) => prev.filter((item) => item.id !== productId));
   };
 
   return (
     <WishListContext.Provider
-      value={{ wishlistItems, setWishlistItems, addToWishlist }}
+      value={{
+        wishlistItems,
+        setWishlistItems,
+        addToWishlist,
+        removeFromWishlist,
+      }}
     >
       {children}
     </WishListContext.Provider>

@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { WishListContext } from "../../context/WishListContext";
 import img from "./WhatsApp Image 2025-08-06 at 12.22.05_e05e9fa7.jpg";
 import { Link } from "react-router";
-import CartItemComponent from "../../components/cart/CartItemComponent";
 import ProductCard from "../../components/ProductCard";
 
 const WishList = () => {
   const { wishlistItems } = useContext(WishListContext);
+
   return (
     <div>
       {wishlistItems.length === 0 ? (
@@ -32,7 +32,11 @@ const WishList = () => {
           <div className="row">
             {wishlistItems.map((item, i) => (
               <div key={i} className="col-12 col-sm-6 col-lg-4 mb-4">
-                <ProductCard product={item} showButtons={true} />
+                <ProductCard
+                  product={item}
+                  showButtons={true}
+                  isWishlist={true}
+                />
               </div>
             ))}
           </div>

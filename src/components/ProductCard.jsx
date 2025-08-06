@@ -4,12 +4,12 @@ import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import { WishListContext } from "../context/WishListContext";
-const ProductCard = ({ product, showButtons = false }) => {
+const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const { addToCart } = useContext(CartContext);
-  const { addToWishlist } = useContext(WishListContext);
+  const { addToWishlist, removeFromWishlist } = useContext(WishListContext);
   const handleAddToCart = (product) => {
     if (!token) {
       Swal.fire({
@@ -111,9 +111,13 @@ const ProductCard = ({ product, showButtons = false }) => {
             <button
               className="btn flex-grow-1"
               style={{ backgroundColor: "rgb(89, 92, 95)", color: "white" }}
-              onClick={() => handleAddToWishlist(product)}
+              onClick={
+                isWishlist
+                  ? () => removeFromWishlist(product._id)
+                  : () => handleAddToWishlist(product)
+              }
             >
-              Add To Wishlist
+              {isWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
             </button>
           </div>
         )}
