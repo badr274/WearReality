@@ -10,6 +10,7 @@ import PersistLogin from "./components/routes/PersistLogin";
 import ProtectedRoutes from "./components/routes/ProtectedRoutes";
 import Contact from "./Pages/contact/Contact";
 import Cart from "./Pages/cart/Cart";
+import ProductDetails from "./Pages/ProductDetails";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/cart" element={<Cart />} />
         </Route>
