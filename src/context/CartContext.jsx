@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-// eslint-disable-next-line react-refresh/only-export-components
+
 export const CartContext = createContext({});
 
 const CartProvider = ({ children }) => {
@@ -14,6 +14,7 @@ const CartProvider = ({ children }) => {
       return [];
     }
   };
+
   const [cartItems, setCartItems] = useState(getStoredCart);
 
   useEffect(() => {
@@ -40,11 +41,17 @@ const CartProvider = ({ children }) => {
         },
       ];
     });
-    toast.success("Product add to cart successfully!");
+
+    toast.success("Product added to cart successfully!");
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    toast.success("Cart cleared!");
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, setCartItems, addToCart }}>
+    <CartContext.Provider value={{ cartItems, setCartItems, addToCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );
