@@ -11,6 +11,7 @@ import ProtectedRoutes from "./components/routes/ProtectedRoutes";
 import Contact from "./Pages/contact/Contact";
 import Cart from "./Pages/cart/Cart";
 import ProductDetails from "./Pages/ProductDetails";
+import WishList from "./Pages/wishlist/WishList";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/wishlist" element={<WishList />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/cart" element={<Cart />} />
         </Route>

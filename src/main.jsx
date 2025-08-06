@@ -8,12 +8,15 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import CartProvider from "./context/CartContext.jsx";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import WishListProvider from "./context/WishListContext.jsx";
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthProvider>
       <CartProvider>
-        <Toaster position="top center" />
-        <App />
+        <WishListProvider>
+          <Toaster position="top center" />
+          <App />
+        </WishListProvider>
       </CartProvider>
     </AuthProvider>
   </BrowserRouter>
