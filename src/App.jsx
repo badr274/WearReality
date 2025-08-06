@@ -8,7 +8,9 @@ import MyNavbar from "./components/MyNavbar";
 import MyFooter from "./components/MyFooter";
 import About from "./Pages/About/About";
 import PersistLogin from "./components/routes/PersistLogin";
+import ProtectedRoutes from "./components/routes/ProtectedRoutes";
 import Contact from "./Pages/contact/Contact";
+import Cart from "./Pages/cart/Cart";
 
 // Dashboard Layout & Pages
 import Layout from "./components/Layout";
@@ -27,18 +29,20 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-
+        <Route path="/products" element={<Products />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/cart" element={<Cart />} />
+        </Route>
+        <Route path="/dashboard" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="customer" element={<Customer />} />
+        </Route>
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/products" element={<Products />} />
 
           {/* Dashboard Routes Nested under Layout */}
-          <Route path="/dashboard" element={<Layout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="analytics" element={<Analytics />} />
-            <Route path="customer" element={<Customer />} />
-          </Route>
         </Route>
 
         {/* Redirect any unknown routes to Home */}
