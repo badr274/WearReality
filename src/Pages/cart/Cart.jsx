@@ -3,12 +3,14 @@ import { CartContext } from "../../context/CartContext";
 import img from "../cart/img.jpg";
 import { Link } from "react-router-dom";
 import CartItemComponent from "../../components/cart/CartItemComponent";
+import TotalCartComponent from "../../components/cart/TotalCartComponent";
 
 const Cart = () => {
   const { cartItems } = useContext(CartContext);
 
+
   return (
-    <div className="">
+    <div className="container py-5">
       {cartItems.length === 0 ? (
         <div className="min-vh-100 d-flex justify-content-center align-items-center flex-column text-center">
           <img
@@ -27,14 +29,22 @@ const Cart = () => {
           </Link>
         </div>
       ) : (
-        <div className="container py-5">
-          <h1 className="mb-5 text-center fw-bold fst-italic">Your Cart</h1>
 
-          {cartItems.map((item, i) => (
-            <CartItemComponent key={i} cartItem={item} />
-          ))}
-        </div>
-      )}
+        <>
+          <h2 className="mb-5 text-center fw-bold fst-italic">Your Cart</h2>
+          <div className="row gap-5 ">
+            <div className="col-lg-9 col-12">
+
+            {cartItems.map((item, i) => (
+              <CartItemComponent key={i} cartItem={item} />
+            ))}
+            </div>
+            <div className="col-lg-2 flex-lg-fill col-12 col-sm-8 m-auto">
+
+            <TotalCartComponent/>
+            </  div>
+          </div>
+        </>
     </div>
   );
 };
