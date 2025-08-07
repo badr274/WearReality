@@ -1,5 +1,4 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import React from "react";
 import Home from "./Pages/home/Home";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
@@ -26,6 +25,7 @@ import PageNotFound from "./Pages/pageNotFound/PageNotFound";
 function App() {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith("/dashboard");
+
   return (
     <>
       {!isDashboardRoute && <MyNavbar />}
@@ -37,7 +37,7 @@ function App() {
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/cart" element={<Cart />} />
-            <Route path="/wishlist" element={<WishList />} />
+          <Route path="/wishlist" element={<WishList />} />
           <Route path="/payment" element={<PaymentPage />} />
         </Route>
         <Route element={<ProtectedDashboard />}>
@@ -50,11 +50,9 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-
         </Route>
 
-        <Route path="*" element={<PageNotFound/>} />
-
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       {!isDashboardRoute && <MyFooter />}
     </>

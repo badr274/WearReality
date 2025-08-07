@@ -1,5 +1,6 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CartContext } from "../../context/CartContext";
+import AOS from "aos";
 
 export default function CartItemComponent({ cartItem }) {
   const { setCartItems } = useContext(CartContext);
@@ -30,8 +31,15 @@ export default function CartItemComponent({ cartItem }) {
     );
   };
 
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   return (
-    <div className="row align-items-center border-bottom py-3 overflow-auto">
+    <div
+      className="row align-items-center border-bottom py-3 overflow-auto"
+      data-aos="fade-right"
+    >
       <div className="col-2">
         <img src={cartItem?.product?.imageCover} className="w-50" alt="item" />
       </div>
@@ -41,7 +49,7 @@ export default function CartItemComponent({ cartItem }) {
       <div className="col-3">
         <div className="d-flex align-items-center">
           <button
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-secondary "
             onClick={() => handleDecreaseQuantity(cartItem?.product._id)}
           >
             -

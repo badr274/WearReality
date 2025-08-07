@@ -9,6 +9,9 @@ import CartProvider from "./context/CartContext.jsx";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import WishListProvider from "./context/WishListContext.jsx";
+import "aos/dist/aos.css";
+import AOS from "aos";
+
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthProvider>

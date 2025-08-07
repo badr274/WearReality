@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import { WishListContext } from "../context/WishListContext";
+import Aos from "aos";
 const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -45,6 +46,10 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
     addToWishlist(product);
   };
 
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+  }, []);
+
   return (
     <div
       className="card h-100 shadow-sm"
@@ -52,6 +57,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
         boxShadow: "0 25px 50px rgba(74, 74, 74, 0.69)",
         border: "none",
       }}
+      data-aos="fade-up"
     >
       <img
         src={product.imageCover || product.images?.[0]}
@@ -124,6 +130,6 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
       </div>
     </div>
   );
-}
+};
 
-export default ProductCard
+export default ProductCard;
