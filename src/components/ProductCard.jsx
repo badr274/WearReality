@@ -3,11 +3,13 @@ import { useNavigate } from "react-router";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
-const ProductCard = ({ product, showButtons = false }) => {
+import { WishListContext } from "../context/WishListContext";
+const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const { addToCart } = useContext(CartContext);
+  const { addToWishlist, removeFromWishlist } = useContext(WishListContext);
   const handleAddToCart = (product) => {
     if (!token) {
       Swal.fire({
@@ -25,9 +27,25 @@ const ProductCard = ({ product, showButtons = false }) => {
     }
     addToCart(product);
   };
+  const handleAddToWishlist = (product) => {
+    if (!token) {
+      Swal.fire({
+        title: "Login Required",
+        text: "You need to log in first to add this product to your wishlist.",
+        icon: "warning",
+        confirmButtonText: "Go to Login",
+        confirmButtonColor: "#651214ff",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+      return;
+    }
+    addToWishlist(product);
+  };
 
   return (
- 
     <div
       className="card h-100 shadow-sm"
       style={{
@@ -39,7 +57,8 @@ const ProductCard = ({ product, showButtons = false }) => {
         src={product.imageCover || product.images?.[0]}
         className="card-img-top w-100"
         alt={product.title}
-        style={{ height: "250px", objectFit: "cover" }}
+        style={{ height: "250px", objectFit: "cover", cursor: "pointer" }}
+        onClick={() => navigate(`/products/${product._id}`)}
       />
       <div className="card-body d-flex flex-column">
         <h5 className="card-title fw-bold ">{product.title}</h5>
@@ -92,15 +111,19 @@ const ProductCard = ({ product, showButtons = false }) => {
             <button
               className="btn flex-grow-1"
               style={{ backgroundColor: "rgb(89, 92, 95)", color: "white" }}
-              onClick={() => navigate(`/products/${product._id}`)}
+              onClick={
+                isWishlist
+                  ? () => removeFromWishlist(product._id)
+                  : () => handleAddToWishlist(product)
+              }
             >
-              Details
+              {isWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
             </button>
           </div>
         )}
       </div>
     </div>
   );
-};
+}
 
-export default ProductCard;
+export default ProductCard
