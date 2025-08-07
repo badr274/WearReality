@@ -33,13 +33,13 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/cart" element={<Cart />} />
         </Route>
-        <Route element={<ProtectedDashboard />}>
+        {/* <Route element={<ProtectedDashboard />}> */}
           <Route path="/dashboard" element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="customer" element={<Customer />} />
           </Route>
-        </Route>
+        {/* </Route> */}
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
