@@ -1,5 +1,4 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import React from "react";
 import Home from "./Pages/home/Home";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
@@ -25,6 +24,7 @@ import PageNotFound from "./Pages/pageNotFound/PageNotFound";
 function App() {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith("/dashboard");
+
   return (
     <>
       {!isDashboardRoute && <MyNavbar />}

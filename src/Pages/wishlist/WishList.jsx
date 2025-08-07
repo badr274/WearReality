@@ -28,7 +28,7 @@ const WishList = () => {
         </div>
       ) : (
         <div className="container py-5">
-          <h2 className="mb-4 text-white">Your Wishlist</h2>
+          <h1 className="mb-5 text-center fw-bold fst-italic">Your Wishlist</h1>
           <div className="row">
             {wishlistItems.map((item, i) => (
               <div key={i} className="col-12 col-sm-6 col-lg-4 mb-4">

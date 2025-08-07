@@ -28,12 +28,11 @@ const Cart = () => {
         </div>
       ) : (
         <div className="container py-5">
-          <h2 className="mb-4 text-white">Your Cart</h2>
-          <div>
-            {cartItems.map((item, i) => (
-              <CartItemComponent key={i} cartItem={item} />
-            ))}
-          </div>
+          <h1 className="mb-5 text-center fw-bold fst-italic">Your Cart</h1>
+
+          {cartItems.map((item, i) => (
+            <CartItemComponent key={i} cartItem={item} />
+          ))}
         </div>
       )}
     </div>
