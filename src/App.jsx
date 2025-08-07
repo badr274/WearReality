@@ -19,6 +19,7 @@ import Layout from "./components/Layout";
 import Dashboard from "./Pages/Admin/Dashboard";
 import Analytics from "./Pages/Admin/Analytics";
 import Customer from "./Pages/Admin/Customer";
+import PaymentPage from "./components/payment";
 import ProtectedDashboard from "./components/routes/ProtectedDashboard";
 import PageNotFound from "./Pages/pageNotFound/PageNotFound";
 
@@ -34,9 +35,10 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path="/wishlist" element={<WishList />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<WishList />} />
+          <Route path="/payment" element={<PaymentPage />} />
         </Route>
         <Route element={<ProtectedDashboard />}>
           <Route path="/dashboard" element={<Layout />}>
