@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast from "react-hot-toast";
 
 const PaymentPage = () => {
   const [formData, setFormData] = useState({
@@ -27,15 +26,7 @@ const PaymentPage = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      toast.success("Product add to cart successfully!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success("Product add to cart successfully!");
     }
   };
 
@@ -60,20 +51,47 @@ const PaymentPage = () => {
         </div>
 
         <div className="col-md-6">
-          <h5 className="fw-bold mb-3" style={{ color: "#651214" }}>Payment Method</h5>
+          <h5 className="fw-bold mb-3" style={{ color: "#651214" }}>
+            Payment Method
+          </h5>
 
           <div className="form-check mb-3">
-            <input className="form-check-input" type="radio" name="paymentMethod" id="card" defaultChecked />
-            <label className="form-check-label" htmlFor="card" style={{ color: "#252525ff" }}>Card</label>
+            <input
+              className="form-check-input"
+              type="radio"
+              name="paymentMethod"
+              id="card"
+              defaultChecked
+            />
+            <label
+              className="form-check-label"
+              htmlFor="card"
+              style={{ color: "#252525ff" }}
+            >
+              Card
+            </label>
           </div>
 
           <div className="form-check mb-4">
-            <input className="form-check-input" type="radio" name="paymentMethod" id="paypal" />
-            <label className="form-check-label" htmlFor="paypal" style={{ color: "#252525ff" }}>PayPal</label>
+            <input
+              className="form-check-input"
+              type="radio"
+              name="paymentMethod"
+              id="paypal"
+            />
+            <label
+              className="form-check-label"
+              htmlFor="paypal"
+              style={{ color: "#252525ff" }}
+            >
+              PayPal
+            </label>
           </div>
 
           <div className="mb-2">
-            <label className="form-label fw-bold" style={{ color: "#651214" }}>Card Number</label>
+            <label className="form-label fw-bold" style={{ color: "#651214" }}>
+              Card Number
+            </label>
             <input
               type="text"
               name="cardNumber"
@@ -82,14 +100,21 @@ const PaymentPage = () => {
               style={{ borderColor: "#8b8b8b41" }}
               value={formData.cardNumber}
               onChange={handleChange}
-              onFocus={(e) => e.target.style.boxShadow = "0 0 0 0.2rem rgba(101, 18, 20, 0.25)"}
-              onBlur={(e) => e.target.style.boxShadow = "none"}
+              onFocus={(e) =>
+                (e.target.style.boxShadow =
+                  "0 0 0 0.2rem rgba(101, 18, 20, 0.25)")
+              }
+              onBlur={(e) => (e.target.style.boxShadow = "none")}
             />
-            {errors.cardNumber && <small className="text-danger">{errors.cardNumber}</small>}
+            {errors.cardNumber && (
+              <small className="text-danger">{errors.cardNumber}</small>
+            )}
           </div>
 
           <div className="mb-2">
-            <label className="form-label fw-bold" style={{ color: "#651214" }}>Name Card</label>
+            <label className="form-label fw-bold" style={{ color: "#651214" }}>
+              Name Card
+            </label>
             <input
               type="text"
               name="nameCard"
@@ -98,15 +123,25 @@ const PaymentPage = () => {
               style={{ borderColor: "#8b8b8b41" }}
               value={formData.nameCard}
               onChange={handleChange}
-              onFocus={(e) => e.target.style.boxShadow = "0 0 0 0.2rem rgba(101, 18, 20, 0.25)"}
-              onBlur={(e) => e.target.style.boxShadow = "none"}
+              onFocus={(e) =>
+                (e.target.style.boxShadow =
+                  "0 0 0 0.2rem rgba(101, 18, 20, 0.25)")
+              }
+              onBlur={(e) => (e.target.style.boxShadow = "none")}
             />
-            {errors.nameCard && <small className="text-danger">{errors.nameCard}</small>}
+            {errors.nameCard && (
+              <small className="text-danger">{errors.nameCard}</small>
+            )}
           </div>
 
           <div className="row g-3 mb-2">
             <div className="col-6">
-              <label className="form-label fw-bold" style={{ color: "#651214" }}>Expires</label>
+              <label
+                className="form-label fw-bold"
+                style={{ color: "#651214" }}
+              >
+                Expires
+              </label>
               <input
                 type="text"
                 name="expires"
@@ -115,14 +150,24 @@ const PaymentPage = () => {
                 style={{ borderColor: "#8b8b8b41" }}
                 value={formData.expires}
                 onChange={handleChange}
-                onFocus={(e) => e.target.style.boxShadow = "0 0 0 0.2rem rgba(101, 18, 20, 0.25)"}
-                onBlur={(e) => e.target.style.boxShadow = "none"}
+                onFocus={(e) =>
+                  (e.target.style.boxShadow =
+                    "0 0 0 0.2rem rgba(101, 18, 20, 0.25)")
+                }
+                onBlur={(e) => (e.target.style.boxShadow = "none")}
               />
-              {errors.expires && <small className="text-danger">{errors.expires}</small>}
+              {errors.expires && (
+                <small className="text-danger">{errors.expires}</small>
+              )}
             </div>
 
             <div className="col-6">
-              <label className="form-label fw-bold" style={{ color: "#651214" }}>CCV</label>
+              <label
+                className="form-label fw-bold"
+                style={{ color: "#651214" }}
+              >
+                CCV
+              </label>
               <input
                 type="text"
                 name="ccv"
@@ -131,23 +176,36 @@ const PaymentPage = () => {
                 style={{ borderColor: "#8b8b8b41" }}
                 value={formData.ccv}
                 onChange={handleChange}
-                onFocus={(e) => e.target.style.boxShadow = "0 0 0 0.2rem rgba(101, 18, 20, 0.25)"}
-                onBlur={(e) => e.target.style.boxShadow = "none"}
+                onFocus={(e) =>
+                  (e.target.style.boxShadow =
+                    "0 0 0 0.2rem rgba(101, 18, 20, 0.25)")
+                }
+                onBlur={(e) => (e.target.style.boxShadow = "none")}
               />
-              {errors.ccv && <small className="text-danger">{errors.ccv}</small>}
+              {errors.ccv && (
+                <small className="text-danger">{errors.ccv}</small>
+              )}
             </div>
           </div>
 
           <div className="form-check mb-4">
             <input className="form-check-input" type="checkbox" id="saveCard" />
-            <label className="form-check-label" htmlFor="saveCard" style={{ color: "#252525ff" }}>
+            <label
+              className="form-check-label"
+              htmlFor="saveCard"
+              style={{ color: "#252525ff" }}
+            >
               Save card for faster checkout
             </label>
           </div>
 
           <button
             className="btn w-100 fw-bold"
-            style={{ backgroundColor: "#611522", color: "#e3e3e3ff", borderRadius: "25px" }}
+            style={{
+              backgroundColor: "#611522",
+              color: "#e3e3e3ff",
+              borderRadius: "25px",
+            }}
             onClick={handleSubmit}
           >
             Place Your Order
