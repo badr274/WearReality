@@ -4,29 +4,12 @@ import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import { WishListContext } from "../context/WishListContext";
-const ProductCard = ({ product, showButtons = false }) => {
+const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const { addToCart } = useContext(CartContext);
-  const { addToWishlist } = useContext(WishListContext);
-  const handleAddToCart = (product) => {
-    if (!token) {
-      Swal.fire({
-        title: "Login Required",
-        text: "You need to log in first to add this product to your cart.",
-        icon: "warning",
-        confirmButtonText: "Go to Login",
-        confirmButtonColor: "#651214ff",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login");
-        }
-      });
-      return;
-    }
-    addToCart(product);
-  };
+  const { addToWishlist, removeFromWishlist } = useContext(WishListContext);
   const handleAddToWishlist = (product) => {
     if (!token) {
       Swal.fire({
@@ -104,22 +87,26 @@ const ProductCard = ({ product, showButtons = false }) => {
             <button
               className="btn flex-grow-1"
               style={{ backgroundColor: "#651214ff", color: "white" }}
-              onClick={() => handleAddToCart(product)}
+              onClick={() => addToCart(product)}
             >
               Add to Cart
             </button>
             <button
               className="btn flex-grow-1"
               style={{ backgroundColor: "rgb(89, 92, 95)", color: "white" }}
-              onClick={() => handleAddToWishlist(product)}
+              onClick={
+                isWishlist
+                  ? () => removeFromWishlist(product._id)
+                  : () => handleAddToWishlist(product)
+              }
             >
-              Add To Wishlist
+              {isWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
             </button>
           </div>
         )}
       </div>
     </div>
   );
-};
+}
 
-export default ProductCard;
+export default ProductCard

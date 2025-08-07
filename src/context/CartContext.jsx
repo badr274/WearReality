@@ -1,10 +1,14 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
-
+import { AuthContext } from "./AuthContext";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
+// eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext({});
 
 const CartProvider = ({ children }) => {
+  const { token } = useContext(AuthContext);
+  const navigate = useNavigate();
   const getStoredCart = () => {
     try {
       const stored = localStorage.getItem("cartItems");
@@ -18,10 +22,30 @@ const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(getStoredCart);
 
   useEffect(() => {
+    if (!token) {
+      setCartItems([]);
+    }
+  }, [token]);
+  useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product) => {
+    if (!token) {
+      Swal.fire({
+        title: "Login Required",
+        text: "You need to log in first to add this product to your cart.",
+        icon: "warning",
+        confirmButtonText: "Go to Login",
+        confirmButtonColor: "#651214ff",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+      return;
+    }
+
     setCartItems((prev) => {
       const existingItemIndex = prev.findIndex(
         (item) => item.product._id === product._id
@@ -29,10 +53,22 @@ const CartProvider = ({ children }) => {
 
       if (existingItemIndex !== -1) {
         const updatedCart = [...prev];
+        if (updatedCart[existingItemIndex].quantity === product.quantity) {
+          Swal.fire({
+            title: "Out of Stock",
+            text: "You can't add more of this product.",
+            icon: "error",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#651214ff",
+          });
+          return prev;
+        }
         updatedCart[existingItemIndex].quantity += 1;
+        toast.success("Product quantity updated in cart!");
         return updatedCart;
       }
 
+      toast.success("Product added to cart successfully!");
       return [
         ...prev,
         {
@@ -41,17 +77,10 @@ const CartProvider = ({ children }) => {
         },
       ];
     });
-
-    toast.success("Product added to cart successfully!");
-  };
-
-  const clearCart = () => {
-    setCartItems([]);
-    toast.success("Cart cleared!");
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, setCartItems, addToCart, clearCart }}>
+    <CartContext.Provider value={{ cartItems, setCartItems, addToCart }}>
       {children}
     </CartContext.Provider>
   );
