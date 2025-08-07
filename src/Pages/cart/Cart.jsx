@@ -29,8 +29,9 @@ const Cart = () => {
           </Link>
         </div>
       ) : (
+
         <>
-          <h2 className="mb-4 text-white">Your Cart</h2>
+          <h2 className="mb-5 text-center fw-bold fst-italic">Your Cart</h2>
           <div className="row gap-5 ">
             <div className="col-lg-9 col-12">
 
@@ -44,7 +45,6 @@ const Cart = () => {
             </  div>
           </div>
         </>
-      )}
     </div>
   );
 };
