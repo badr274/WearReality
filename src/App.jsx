@@ -19,7 +19,7 @@ import Layout from "./components/Layout";
 import Dashboard from "./Pages/Admin/Dashboard";
 import Analytics from "./Pages/Admin/Analytics";
 import Customer from "./Pages/Admin/Customer";
-import PaymentPage from "./components/payment";
+import PaymentPage from "./Pages/payment";
 import ProtectedDashboard from "./components/routes/ProtectedDashboard";
 import PageNotFound from "./Pages/pageNotFound/PageNotFound";
 
@@ -36,8 +36,9 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route element={<ProtectedRoutes />}>
+          <Route path="/wishlist" element={<WishList />} />
           <Route path="/cart" element={<Cart />} />
-            <Route path="/wishlist" element={<WishList />} />
+          <Route path="/wishlist" element={<WishList />} />
           <Route path="/payment" element={<PaymentPage />} />
         </Route>
         <Route element={<ProtectedDashboard />}>
@@ -50,11 +51,9 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-
         </Route>
 
-        <Route path="*" element={<PageNotFound/>} />
-
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       {!isDashboardRoute && <MyFooter />}
     </>

@@ -10,23 +10,6 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
 
   const { addToCart } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist } = useContext(WishListContext);
-  const handleAddToCart = (product) => {
-    if (!token) {
-      Swal.fire({
-        title: "Login Required",
-        text: "You need to log in first to add this product to your cart.",
-        icon: "warning",
-        confirmButtonText: "Go to Login",
-        confirmButtonColor: "#651214ff",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login");
-        }
-      });
-      return;
-    }
-    addToCart(product);
-  };
   const handleAddToWishlist = (product) => {
     if (!token) {
       Swal.fire({
@@ -104,7 +87,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
             <button
               className="btn flex-grow-1"
               style={{ backgroundColor: "#651214ff", color: "white" }}
-              onClick={() => handleAddToCart(product)}
+              onClick={() => addToCart(product)}
             >
               Add to Cart
             </button>

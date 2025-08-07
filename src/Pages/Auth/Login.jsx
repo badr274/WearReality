@@ -23,7 +23,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    if (data.email === "admin@admin.com" && data.password === "admin1234") {
+    if (data.email === "admin1234@admin.com" && data.password === "admin1234") {
       localStorage.setItem("role", "admin");
     }
     try {
