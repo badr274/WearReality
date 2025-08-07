@@ -1,18 +1,32 @@
 import { useContext, useEffect } from "react";
 import { CartContext } from "../../context/CartContext";
 import AOS from "aos";
+import Swal from "sweetalert2";
 
 export default function CartItemComponent({ cartItem }) {
   const { setCartItems } = useContext(CartContext);
-  const handleIncreaseQuantity = (productId) => {
+  const handleIncreaseQuantity = (productId, stock) => {
     setCartItems((prev) =>
-      prev.map((item) =>
-        item.product._id === productId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
+      prev.map((item) => {
+        if (item.product._id === productId) {
+          if (item.quantity === stock) {
+            Swal.fire({
+              title: "Out of Stock",
+              text: "You can't add more of this product.",
+              icon: "error",
+              confirmButtonText: "OK",
+              confirmButtonColor: "#651214ff",
+            });
+            return item;
+          } else {
+            return { ...item, quantity: item.quantity + 1 };
+          }
+        }
+        return item;
+      })
     );
   };
+
   const handleDecreaseQuantity = (productId) => {
     setCartItems((prev) =>
       prev.map((item) =>
@@ -27,7 +41,7 @@ export default function CartItemComponent({ cartItem }) {
 
   const handleRemoveFromCart = (productId) => {
     setCartItems((prev) =>
-      prev.filter((item) => item.product._id !== productId)
+      prev.filter((item) => item.product?._id !== productId)
     );
   };
 
@@ -57,7 +71,12 @@ export default function CartItemComponent({ cartItem }) {
           <span className="mx-2">{cartItem?.quantity}</span>
           <button
             className="btn btn-outline-secondary"
-            onClick={() => handleIncreaseQuantity(cartItem?.product._id)}
+            onClick={() =>
+              handleIncreaseQuantity(
+                cartItem?.product._id,
+                cartItem.product.quantity
+              )
+            }
           >
             +
           </button>
@@ -69,7 +88,7 @@ export default function CartItemComponent({ cartItem }) {
       <div className="col-2">
         <button
           className="btn btn-sm btn-link text-danger ps-0"
-          onClick={() => handleRemoveFromCart(cartItem?.product._id)}
+          onClick={() => handleRemoveFromCart(cartItem?.product?._id)}
         >
           <i className="bi bi-trash fs-4"></i>
         </button>
