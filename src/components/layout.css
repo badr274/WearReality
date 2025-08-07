@@ -1,0 +1,10 @@
+.dashboard-content {
+  margin-left: 80px;
+  width: 100%;
+  overflow: hidden;
+}
+@media (min-width: 991px) {
+  .dashboard-content {
+    margin-left: 280px;
+  }
+}

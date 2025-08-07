@@ -22,7 +22,6 @@ import Customer from "./Pages/Admin/Customer";
 import PaymentPage from "./Pages/payment";
 import ProtectedDashboard from "./components/routes/ProtectedDashboard";
 import PageNotFound from "./Pages/pageNotFound/PageNotFound";
-
 function App() {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith("/dashboard");
