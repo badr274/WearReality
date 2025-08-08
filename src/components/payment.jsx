@@ -19,15 +19,39 @@ const PaymentPage = () => {
 
   const handleSubmit = () => {
     const newErrors = {};
-    if (!formData.cardNumber) newErrors.cardNumber = "Card Number is required";
-    if (!formData.nameCard) newErrors.nameCard = "Cardholder name is required";
-    if (!formData.expires) newErrors.expires = "Expiration date is required";
-    if (!formData.ccv) newErrors.ccv = "CCV is required";
+
+    if (!/^\d{16}$/.test(formData.cardNumber)) {
+      newErrors.cardNumber = "Card Number must be exactly 16 digits";
+    }
+
+    if (!formData.nameCard.trim()) {
+  newErrors.nameCard = "Card name is required";
+} else if (!/^[A-Za-z\s]+$/.test(formData.nameCard)) {
+  newErrors.nameCard = "Name must contain letters only";
+}
+
+    if (!formData.expires) {
+      newErrors.expires = "Expiration date is required";
+    } else {
+      const [month, year] = formData.expires.split("/").map(str => str.trim());
+      const currentDate = new Date();
+      const inputDate = new Date(`20${year}`, month - 1);
+
+      if (!month || !year || isNaN(month) || isNaN(year) || month < 1 || month > 12) {
+        newErrors.expires = "Invalid date format (MM / YY)";
+      } else if (inputDate <= currentDate) {
+        newErrors.expires = "Expiration date must be in the future";
+      }
+    }
+
+    if (!/^\d{3}$/.test(formData.ccv)) {
+      newErrors.ccv = "CCV must be exactly 3 digits";
+    }
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      toast.success("Product add to cart successfully!", {
+      toast.success("Payment done successfully!", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
