@@ -8,7 +8,6 @@ import TotalCartComponent from "../../components/cart/TotalCartComponent";
 const Cart = () => {
   const { cartItems } = useContext(CartContext);
 
-
   return (
     <div className="container py-5">
       {cartItems.length === 0 ? (
@@ -17,9 +16,8 @@ const Cart = () => {
             src={img}
             alt="Empty Cart"
             className="my-4"
-            style={{ width: "400px" }}
+            style={{ width: "400px", maxWidth: "100%" }}
           />
-
           <Link
             to="/Products"
             className="btn btn-success text-white"
@@ -29,22 +27,20 @@ const Cart = () => {
           </Link>
         </div>
       ) : (
-
         <>
           <h2 className="mb-5 text-center fw-bold fst-italic">Your Cart</h2>
-          <div className="row gap-5 ">
-            <div className="col-lg-9 col-12">
-
-            {cartItems.map((item, i) => (
-              <CartItemComponent key={i} cartItem={item} />
-            ))}
+          <div className="row justify-content-between">
+            <div className="col-lg-9 col-12 mb-4">
+              {cartItems.map((item, i) => (
+                <CartItemComponent key={i} cartItem={item} />
+              ))}
             </div>
-            <div className="col-lg-2 flex-lg-fill col-12 col-sm-8 m-auto">
-
-            <TotalCartComponent/>
-            </  div>
+            <div className="col-lg-3 col-12">
+              <TotalCartComponent />
+            </div>
           </div>
         </>
+      )}
     </div>
   );
 };

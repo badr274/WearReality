@@ -1,8 +1,10 @@
-import { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import toast from "react-hot-toast";
+import { useContext, useState } from "react";
+import Swal from "sweetalert2";
+import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router";
 
 const PaymentPage = () => {
+  const { totalPrice } = useContext(CartContext);
   const [formData, setFormData] = useState({
     cardNumber: "",
     nameCard: "",
@@ -11,6 +13,7 @@ const PaymentPage = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,15 +28,25 @@ const PaymentPage = () => {
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      toast.success("Product add to cart successfully!");
-    }
+    if (Object.keys(newErrors).length > 0) return;
+
+    Swal.fire({
+      title: `Are you sure you want to pay ${totalPrice.toFixed(2)} EGP?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, place order",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Your order has been placed!", "", "success");
+        navigate("/");
+      }
+    });
   };
 
   return (
     <div className="container py-5 bg-white position-relative">
-      
-
       <div className="row align-items-center">
         <div className="col-md-6 d-flex justify-content-center mb-4 mb-md-0">
           <img
