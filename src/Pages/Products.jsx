@@ -158,7 +158,11 @@ export default function Products() {
 
         {/* Product Grid */}
         <div className="col-12 col-md-9">
-          <h2 style={{ color: "#651214ff" }} className="fw-bold mb-4">
+          {/* <h1 className="mb-5 text-center fw-bold fst-italic">Your Wishlist</h1> */}
+          <h2
+            style={{ color: "#651214ff" }}
+            className="fw-bold mb-4 fst-italic"
+          >
             {selectedCategory === "all" ? "All Products" : selectedCategory}
           </h2>
           <div className="row">

@@ -18,6 +18,7 @@ const CartProvider = ({ children }) => {
       return [];
     }
   };
+
   const [cartItems, setCartItems] = useState(getStoredCart);
 
   useEffect(() => {
