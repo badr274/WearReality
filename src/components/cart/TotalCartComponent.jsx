@@ -6,10 +6,6 @@ const TotalCartComponent = () => {
   const navigate = useNavigate();
   const { cartItems, setCartItems, totalPrice } = useContext(CartContext);
 
-  // const totalPrice = cartItems.reduce(
-  //   (total , item) => total + item.quantity * item.product.price,
-  //   0
-  // );
   return (
     <div className="w-100">
       <div

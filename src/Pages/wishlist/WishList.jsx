@@ -3,7 +3,6 @@ import { WishListContext } from "../../context/WishListContext";
 import img from "./WhatsApp Image 2025-08-06 at 12.22.05_e05e9fa7.jpg";
 import { Link } from "react-router";
 import ProductCard from "../../components/ProductCard";
-import Swal from "sweetalert2";
 
 const WishList = () => {
   const { wishlistItems } = useContext(WishListContext);
