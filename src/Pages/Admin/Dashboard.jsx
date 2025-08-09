@@ -16,33 +16,9 @@ export default function Dashboard() {
   });
   const [searchTerm, setSearchTerm] = useState("");
 
-  const deleteAlert = (product) => {
-    Swal.fire({
-      title: `Are you sure you want to delete ${product.name}?`,
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
-        handleDelete(products.indexOf(product));
-      }
-    });
-  };
-
   const statusColors = {
-    Pending: "badge bg-warning",
     Active: "badge bg-success",
-    Inactive: "badge bg-danger",
     "On Sale": "badge bg-primary",
-    Bouncing: "badge bg-info",
   };
 
   const fetchProducts = async () => {
@@ -100,8 +76,24 @@ export default function Dashboard() {
   };
 
   const handleDelete = (index) => {
-    const updatedProducts = products.filter((_, i) => i !== index);
-    setProducts(updatedProducts);
+    Swal.fire({
+      title: `Are you sure you want to delete ${products[index].name}?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        handleDelete(products.indexOf(index));
+      }
+    });
   };
 
   useEffect(() => {
@@ -149,83 +141,111 @@ export default function Dashboard() {
       </div>
 
       <div
-        style={{
-          backgroundColor: "white",
-          padding: "30px",
-          borderRadius: "15px",
-          boxShadow: "0 0 20px rgba(0,0,0,0.05)",
-        }}
+        style={{ overflowX: "auto", width: "100%" }}
+        className="d-none d-lg-block"
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "20px",
-          }}
-        >
-          <h4
-            style={{ margin: 0, color: "rgb(101, 18, 20)", fontWeight: "bold" }}
-          >
-            Products
-          </h4>
-        </div>
+        <table className="table table-striped" style={{ minWidth: "1000px" }}>
+          <thead>
+            <tr>
+              <th style={{ color: "rgb(101, 18, 20)" }}>Product Name</th>
 
-        <div style={{ overflowX: "auto", width: "100%" }}>
-          <table className="table table-striped" style={{ minWidth: "1000px" }}>
-            <thead>
-              <tr>
-                <th style={{ color: "rgb(101, 18, 20)" }}>Product Name</th>
-                <th style={{ color: "rgb(101, 18, 20)" }}>Product ID</th>
-                <th style={{ color: "rgb(101, 18, 20)" }}>Price</th>
-                <th style={{ color: "rgb(101, 18, 20)" }}>Stock</th>
-                <th style={{ color: "rgb(101, 18, 20)" }}>Type</th>
-                <th style={{ color: "rgb(101, 18, 20)" }}>Status</th>
-                <th style={{ color: "rgb(101, 18, 20)" }}>Actions</th>
+              <th style={{ color: "rgb(101, 18, 20)" }}>Price</th>
+              <th style={{ color: "rgb(101, 18, 20)" }}>Stock</th>
+              <th style={{ color: "rgb(101, 18, 20)" }}>Type</th>
+              <th style={{ color: "rgb(101, 18, 20)" }}>Status</th>
+              <th style={{ color: "rgb(101, 18, 20)" }}>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredProducts.map((p, idx) => (
+              <tr key={idx}>
+                <td>{p.name}</td>
+                <td>{p.price}</td>
+                <td>{p.stock}</td>
+                <td>{p.type}</td>
+                <td>
+                  <span
+                    className={statusColors[p.status] || "badge bg-secondary"}
+                  >
+                    {p.status}
+                  </span>
+                </td>
+                <td className="d-flex align-items-center">
+                  <button
+                    className="btn btn-sm me-2"
+                    style={{
+                      backgroundColor: "rgb(89, 92, 95)",
+                      color: "#efefefff",
+                    }}
+                    onClick={() => handleEdit(idx)}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="btn btn-sm"
+                    style={{
+                      backgroundColor: "#651214ff",
+                      color: "#efefefff",
+                    }}
+                    onClick={() => handleDelete(idx)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filteredProducts.map((p, idx) => (
-                <tr key={idx}>
-                  <td>{p.name}</td>
-                  <td>{p.id}</td>
-                  <td>{p.price}</td>
-                  <td>{p.stock}</td>
-                  <td>{p.type}</td>
-                  <td>
-                    <span
-                      className={statusColors[p.status] || "badge bg-secondary"}
-                    >
-                      {p.status}
-                    </span>
-                  </td>
-                  <td className="d-flex align-items-center">
-                    <button
-                      className="btn btn-sm me-2"
-                      style={{
-                        backgroundColor: "rgb(89, 92, 95)",
-                        color: "#efefefff",
-                      }}
-                      onClick={() => handleEdit(idx)}
-                    >
-                      Update
-                    </button>
-                    <button
-                      className="btn btn-sm"
-                      style={{
-                        backgroundColor: "#651214ff",
-                        color: "#efefefff",
-                      }}
-                      onClick={() => deleteAlert(p)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="d-block d-lg-none">
+        {filteredProducts.map((p, idx) => (
+          <div
+            key={idx}
+            className="card mb-3"
+            style={{ backgroundColor: "#f8f9fa", border: "1px solid #ccc" }}
+          >
+            <div className="card-body">
+              <h5 className="card-title">{p.name}</h5>
+              <p className="card-text">
+                <strong>ID:</strong> {p.id}
+              </p>
+              <p className="card-text">
+                <strong>Price:</strong> {p.price}
+              </p>
+              <p className="card-text">
+                <strong>Stock:</strong> {p.stock}
+              </p>
+              <p className="card-text">
+                <strong>Type:</strong> {p.type}
+              </p>
+              <p className="card-text">
+                <strong>Status:</strong>{" "}
+                <span
+                  className={statusColors[p.status] || "badge bg-secondary"}
+                >
+                  {p.status}
+                </span>
+              </p>
+              <div className="d-flex gap-2 mt-3">
+                <button
+                  className="btn btn-sm w-50"
+                  style={{ backgroundColor: "rgb(89, 92, 95)", color: "#fff" }}
+                  onClick={() => handleEdit(idx)}
+                >
+                  Update
+                </button>
+                <button
+                  className="btn btn-sm w-50"
+                  style={{ backgroundColor: "#651214", color: "#fff" }}
+                  onClick={() => handleDelete(idx)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       {showModal && (
@@ -240,6 +260,7 @@ export default function Dashboard() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            zIndex: 9999,
           }}
         >
           <div
@@ -260,14 +281,6 @@ export default function Dashboard() {
               name="name"
               placeholder="Product Name"
               value={newProduct.name}
-              onChange={handleInputChange}
-            />
-            <input
-              className="form-control mb-3"
-              type="text"
-              name="id"
-              placeholder="Product ID"
-              value={newProduct.id}
               onChange={handleInputChange}
             />
             <input
@@ -301,11 +314,8 @@ export default function Dashboard() {
               onChange={handleInputChange}
             >
               <option value="">Select Status</option>
-              <option value="Pending">Pending</option>
               <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
               <option value="On Sale">On Sale</option>
-              <option value="Bouncing">Bouncing</option>
             </select>
             <div className="d-flex justify-content-end">
               <button

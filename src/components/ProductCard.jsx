@@ -113,7 +113,8 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
           </div>
 
           <div className="small text-warning ms-2">
-            {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0} reviews)
+            {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0}{" "}
+            reviews)
           </div>
         </div>
 
