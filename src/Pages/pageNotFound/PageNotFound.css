@@ -1,0 +1,6 @@
+.not-found-btn:hover {
+  background-color: #651214ff !important;
+  color: #ffffff !important;
+  transition: 0.3s;
+  border-color: #651214ff !important;
+}

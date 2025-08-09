@@ -1,77 +1,49 @@
-import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import "./Auth.css";
-export default function Signup() {
-  const navigate = useNavigate();
+import signupSchema from "../../validation/SignupShema";
+import { useState } from "react";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    rePassword: "",
-    phone: "",
+const Signup = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(signupSchema),
   });
 
-  const [errors, setErrors] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      await axios.post(
+        "https://ecommerce.routemisr.com/api/v1/auth/signup",
+        data
+      );
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setErrors("");
-    setSuccessMessage("");
-
-    // Get existing users from localStorage
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-    // Check if email already exists
-    const userExists = existingUsers.some(
-      (user) => user.email === formData.email
-    );
-
-    if (userExists) {
-      setErrors("Account with this email already exists!");
-      return;
-    }
-
-    if (formData.password !== formData.rePassword) {
-      setErrors("Passwords do not match!");
-      return;
-    }
-
-    // Save new user to localStorage
-    const updatedUsers = [
-      ...existingUsers,
-      { email: formData.email, password: formData.password },
-    ];
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
-
-    setSuccessMessage("Account created successfully! Redirecting to Login...");
-
-    setTimeout(() => {
+      toast.success("Account created successfully! Redirecting to login...");
       navigate("/login");
-    }, 2000);
+    } catch (error) {
+      const errMsg =
+        error.response?.data?.message || "Something went wrong. Try again.";
+      toast.error(errMsg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="container mt-5">
-      <h1
-        className="text-center mb-4 fw-bold fst-italic"
-        // style={{ color: "#651214ff" }}
-      >
-        Sign Up
-      </h1>
-
-      {errors && <div className="alert alert-danger">{errors}</div>}
-      {successMessage && (
-        <div className="alert alert-success">{successMessage}</div>
-      )}
+    <div className="container mt-5 position-relative">
+      <h1 className="text-center mb-4 fw-bold fst-italic">Sign Up</h1>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="mx-auto"
         style={{ maxWidth: "50%" }}
       >
@@ -79,14 +51,8 @@ export default function Signup() {
           <label className="form-label fw-bold" htmlFor="name">
             Name
           </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
+          <input id="name" className="form-control" {...register("name")} />
+          {errors.name && <p className="text-danger">{errors.name.message}</p>}
         </div>
 
         <div className="mb-3">
@@ -94,13 +60,14 @@ export default function Signup() {
             Email
           </label>
           <input
-            type="email"
+            type="text"
             id="email"
-            name="email"
-            onChange={handleChange}
             className="form-control"
-            required
+            {...register("email")}
           />
+          {errors.email && (
+            <p className="text-danger">{errors.email.message}</p>
+          )}
         </div>
 
         <div className="mb-3">
@@ -110,11 +77,12 @@ export default function Signup() {
           <input
             type="password"
             id="password"
-            name="password"
-            onChange={handleChange}
             className="form-control"
-            required
+            {...register("password")}
           />
+          {errors.password && (
+            <p className="text-danger">{errors.password.message}</p>
+          )}
         </div>
 
         <div className="mb-3">
@@ -124,11 +92,12 @@ export default function Signup() {
           <input
             type="password"
             id="rePassword"
-            name="rePassword"
-            onChange={handleChange}
             className="form-control"
-            required
+            {...register("rePassword")}
           />
+          {errors.rePassword && (
+            <p className="text-danger">{errors.rePassword.message}</p>
+          )}
         </div>
 
         <div className="mb-3">
@@ -138,25 +107,27 @@ export default function Signup() {
           <input
             type="text"
             id="phone"
-            name="phone"
-            onChange={handleChange}
             className="form-control"
-            required
+            {...register("phone")}
           />
+          {errors.phone && (
+            <p className="text-danger">{errors.phone.message}</p>
+          )}
         </div>
 
-        <button
-          type="submit"
-          className="btn w-100 fw-bold submit-btn"
-          // style={{ backgroundColor: "#651214ff", color: "white" }}
-        >
-          Signup
+        <button type="submit" className="btn w-100 fw-bold submit-btn">
+          {loading ? <LoadingSpinner /> : "Signup"}
         </button>
       </form>
 
       <p className="mt-3 text-center">
-        Already have an account? <Link to="/login">Login</Link>
+        Already have an account?
+        <Link to="/login" style={{ color: "var(--main-color)" }}>
+          Login
+        </Link>
       </p>
     </div>
   );
-}
+};
+
+export default Signup;
