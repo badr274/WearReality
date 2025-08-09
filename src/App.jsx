@@ -1,5 +1,4 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import React from "react";
 import Home from "./Pages/home/Home";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
@@ -19,13 +18,14 @@ import Layout from "./components/Layout";
 import Dashboard from "./Pages/Admin/Dashboard";
 import Analytics from "./Pages/Admin/Analytics";
 import Customer from "./Pages/Admin/Customer";
-import PaymentPage from "./components/payment";
+import PaymentPage from "./Pages/payment";
 import ProtectedDashboard from "./components/routes/ProtectedDashboard";
 import PageNotFound from "./Pages/pageNotFound/PageNotFound";
-
+import Reviews from "./Pages/Admin/Reviews";
 function App() {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith("/dashboard");
+
   return (
     <>
       {!isDashboardRoute && <MyNavbar />}
@@ -36,25 +36,25 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route element={<ProtectedRoutes />}>
+          <Route path="/wishlist" element={<WishList />} />
           <Route path="/cart" element={<Cart />} />
-            <Route path="/wishlist" element={<WishList />} />
+          <Route path="/wishlist" element={<WishList />} />
           <Route path="/payment" element={<PaymentPage />} />
         </Route>
-        <Route element={<ProtectedDashboard />}>
+        {/* <Route element={<ProtectedDashboard />}> */}
           <Route path="/dashboard" element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="customer" element={<Customer />} />
+            <Route path="reviews" element={<Reviews />} />
           </Route>
-        </Route>
+        {/* </Route> */}
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-
         </Route>
 
-        <Route path="*" element={<PageNotFound/>} />
-
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       {!isDashboardRoute && <MyFooter />}
     </>

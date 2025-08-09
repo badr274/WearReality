@@ -9,13 +9,19 @@ import CartProvider from "./context/CartContext.jsx";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import WishListProvider from "./context/WishListContext.jsx";
+import "aos/dist/aos.css";
+import AOS from "aos";
+import ReviewsProvider from "./context/ReviewsContext.jsx";
+
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthProvider>
       <CartProvider>
         <WishListProvider>
-          <Toaster position="top center" />
-          <App />
+          <ReviewsProvider>
+            <Toaster position="top center" />
+            <App />
+          </ReviewsProvider>
         </WishListProvider>
       </CartProvider>
     </AuthProvider>

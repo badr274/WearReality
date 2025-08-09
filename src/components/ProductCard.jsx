@@ -1,32 +1,16 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import { WishListContext } from "../context/WishListContext";
+import Aos from "aos";
 const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const { addToCart } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist } = useContext(WishListContext);
-  const handleAddToCart = (product) => {
-    if (!token) {
-      Swal.fire({
-        title: "Login Required",
-        text: "You need to log in first to add this product to your cart.",
-        icon: "warning",
-        confirmButtonText: "Go to Login",
-        confirmButtonColor: "#651214ff",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login");
-        }
-      });
-      return;
-    }
-    addToCart(product);
-  };
   const handleAddToWishlist = (product) => {
     if (!token) {
       Swal.fire({
@@ -45,6 +29,12 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
     addToWishlist(product);
   };
 
+  console.log("ProductCard", product);
+
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+  }, []);
+
   return (
     <div
       className="card h-100 shadow-sm"
@@ -52,6 +42,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
         boxShadow: "0 25px 50px rgba(74, 74, 74, 0.69)",
         border: "none",
       }}
+      data-aos="fade-up"
     >
       <img
         src={product.imageCover || product.images?.[0]}
@@ -104,7 +95,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
             <button
               className="btn flex-grow-1"
               style={{ backgroundColor: "#651214ff", color: "white" }}
-              onClick={() => handleAddToCart(product)}
+              onClick={() => addToCart(product)}
             >
               Add to Cart
             </button>
@@ -124,6 +115,6 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
       </div>
     </div>
   );
-}
+};
 
-export default ProductCard
+export default ProductCard;

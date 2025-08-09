@@ -23,7 +23,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    if (data.email === "admin@admin.com" && data.password === "admin1234") {
+    if (data.email === "admin1234@admin.com" && data.password === "admin1234") {
       localStorage.setItem("role", "admin");
     }
     try {
@@ -33,8 +33,9 @@ const Login = () => {
       );
 
       const token = res.data.token;
-      if (token) {
-        login(token);
+      const username = res.data.user.name;
+      if (token && username) {
+        login(token, username);
       }
 
       toast.success("Login successful! Redirecting to home...");
