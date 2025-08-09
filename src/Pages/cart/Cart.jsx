@@ -15,9 +15,8 @@ const Cart = () => {
             src={img}
             alt="Empty Cart"
             className="my-4"
-            style={{ width: "400px" }}
+            style={{ width: "400px", maxWidth: "100%" }}
           />
-
           <Link
             to="/Products"
             className="btn btn-success text-white"

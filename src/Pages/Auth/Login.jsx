@@ -7,7 +7,7 @@ import loginSchema from "../../validation/loginShcema";
 import toast from "react-hot-toast";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-
+import LoadingSpinner from "../../components/LoadingSpinner";
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -22,19 +22,23 @@ const Login = () => {
   });
 
   const onSubmit = async (data) => {
-    setLoading(true);
-    if (data.email === "admin1234@admin.com" && data.password === "admin1234") {
-      localStorage.setItem("role", "admin");
-    }
     try {
+      setLoading(true);
+      if (
+        data.email === "admin1234@admin.com" &&
+        data.password === "admin1234"
+      ) {
+        localStorage.setItem("role", "admin");
+      }
       const res = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/auth/signin",
         data
       );
 
       const token = res.data.token;
-      if (token) {
-        login(token);
+      const username = res.data.user.name;
+      if (token && username) {
+        login(token, username);
       }
 
       toast.success("Login successful! Redirecting to home...");
@@ -88,12 +92,15 @@ const Login = () => {
           className="btn w-100 fw-bold submit-btn"
           disabled={loading}
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? <LoadingSpinner /> : "Login"}
         </button>
       </form>
 
       <p className="mt-3">
-        Don't have an account? <Link to="/signup">Sign up</Link>
+        Don't have an account?
+        <Link to="/signup" style={{ color: "var(--main-color)" }}>
+          Sign up
+        </Link>
       </p>
     </div>
   );

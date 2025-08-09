@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthContext";
 import Swal from "sweetalert2";
@@ -19,6 +19,13 @@ const CartProvider = ({ children }) => {
   };
 
   const [cartItems, setCartItems] = useState(getStoredCart);
+
+  const totalPrice = useMemo(() => {
+    return cartItems.reduce(
+      (total, item) => total + item.quantity * item.product.price,
+      0
+    );
+  }, [cartItems]);
 
   useEffect(() => {
     if (!token) {

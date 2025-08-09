@@ -1,10 +1,11 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import adminImage from "/images/admin.jpg";
 export default function Sidebar() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
 
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -31,7 +32,13 @@ export default function Sidebar() {
           className="rounded-circle me-2"
           style={{ width: "40px", height: "40px" }}
         />
-        <span className="d-none d-lg-inline-block">Wear Reality</span>
+        <span
+          className="d-none d-lg-inline-block"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/")}
+        >
+          Wear Reality
+        </span>
       </div>
       <ul style={{ listStyle: "none", padding: 0 }}>
         <Link to="/dashboard" style={{ textDecoration: "none" }}>
@@ -112,6 +119,32 @@ export default function Sidebar() {
               style={{ fontSize: "18px", width: "fit-content" }}
             ></i>
             <span className="d-none d-lg-inline-block flex-fill">Customer</span>
+          </li>
+        </Link>
+        <Link to="/dashboard/reviews" style={{ textDecoration: "none" }}>
+          <li
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "20px",
+              cursor: "pointer",
+              fontWeight: "500",
+              color: isActive("/dashboard/reviews")
+                ? "rgb(101, 18, 20)"
+                : "#595c5f",
+              backgroundColor: isActive("/dashboard/reviews")
+                ? "#4f4d4d7b"
+                : "transparent",
+              borderRadius: "8px",
+              padding: "8px",
+              gap: "10px",
+            }}
+          >
+            <i
+              className="bi bi-pencil-square mx-auto"
+              style={{ fontSize: "18px", width: "fit-content" }}
+            ></i>
+            <span className="d-none d-lg-inline-block flex-fill">Reviews</span>
           </li>
         </Link>
       </ul>
