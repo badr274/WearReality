@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const PaymentPage = () => {
   const [formData, setFormData] = useState({
@@ -25,10 +23,10 @@ const PaymentPage = () => {
     }
 
     if (!formData.nameCard.trim()) {
-  newErrors.nameCard = "Card name is required";
-} else if (!/^[A-Za-z\s]+$/.test(formData.nameCard)) {
-  newErrors.nameCard = "Name must contain letters only";
-}
+      newErrors.nameCard = "Card name is required";
+    } else if (!/^[A-Za-z\s]+$/.test(formData.nameCard)) {
+      newErrors.nameCard = "Name must contain letters only";
+    }
 
     if (!formData.expires) {
       newErrors.expires = "Expiration date is required";
@@ -50,23 +48,11 @@ const PaymentPage = () => {
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      toast.success("Payment done successfully!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    }
+    // هنا شلنا التوست نهائياً
   };
 
   return (
     <div className="container py-5 bg-white position-relative">
-      <ToastContainer />
-
       <div className="row align-items-center">
         <div className="col-md-6 d-flex justify-content-center mb-4 mb-md-0">
           <img
