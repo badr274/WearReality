@@ -1,20 +1,26 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ReviewsContext } from "../context/ReviewsContext";
+import LoadingSpinner from "./LoadingSpinner";
 
 const ProofOfWear = ({ review, showBtns = false, className }) => {
+  const [loading, setLoading] = useState(false);
   const { setUnderReview, setAcceptedReviews } = useContext(ReviewsContext);
   const isFashion =
     review?.productCategory === "Men's Fashion" ||
     review?.productCategory === "Women's Fashion";
 
   const handleCancelReview = (id) => {
-    setUnderReview((prev) => prev.filter((review) => review.reviewId !== id));
+    setUnderReview((prev) => prev.filter((item) => item.reviewId !== id));
   };
   const handleAcceptReview = (review) => {
+    setLoading(true);
     setAcceptedReviews((prev) => [...prev, review]);
-    setUnderReview((prev) =>
-      prev.filter((review) => review.reviewId !== review.reviewId)
-    );
+    setTimeout(() => {
+      setLoading(false);
+      setUnderReview((prev) =>
+        prev.filter((item) => item.reviewId !== review.reviewId)
+      );
+    }, 800);
   };
   return (
     <div
@@ -24,8 +30,8 @@ const ProofOfWear = ({ review, showBtns = false, className }) => {
       <img
         src={review.image}
         alt={`proof`}
-        className="img-fluid rounded object-fit-cover"
-        style={{ maxHeight: "300px", width: "100%" }}
+        className="img-fluid rounded object-fit-cover mb-1"
+        style={{ height: "250px", width: "100%" }}
       />
       <div className="p-1 d-flex flex-column flex-grow-1">
         <p
@@ -67,7 +73,7 @@ const ProofOfWear = ({ review, showBtns = false, className }) => {
         </div>
       </div>
       {showBtns ? (
-        <div className="d-flex justify-content-end mt-3">
+        <div className="d-flex justify-content-start mt-3">
           <button
             className="btn btn-outline-secondary me-2"
             onClick={() => handleCancelReview(review.reviewId)}
@@ -78,7 +84,7 @@ const ProofOfWear = ({ review, showBtns = false, className }) => {
             className="btn btn-primary"
             onClick={() => handleAcceptReview(review)}
           >
-            Accept
+            {loading ? <LoadingSpinner message="" /> : "Accept"}
           </button>
         </div>
       ) : null}
