@@ -1,14 +1,18 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthContext";
+import { StockContext } from "./StockContext"; //
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext({});
 
 const CartProvider = ({ children }) => {
   const { token } = useContext(AuthContext);
+  const { stockData, setStockData } = useContext(StockContext);
   const navigate = useNavigate();
+
   const getStoredCart = () => {
     try {
       const stored = localStorage.getItem("cartItems");
@@ -33,6 +37,7 @@ const CartProvider = ({ children }) => {
       setCartItems([]);
     }
   }, [token]);
+
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -53,6 +58,18 @@ const CartProvider = ({ children }) => {
       return;
     }
 
+    const stockItem = stockData.find((item) => item.productId === product.id);
+    if (!stockItem || stockItem.stock <= 0) {
+      Swal.fire({
+        title: "Out of Stock",
+        text: "This product is out of stock.",
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#651214ff",
+      });
+      return;
+    }
+
     setCartItems((prev) => {
       const existingItemIndex = prev.findIndex(
         (item) => item.product._id === product._id
@@ -60,30 +77,22 @@ const CartProvider = ({ children }) => {
 
       if (existingItemIndex !== -1) {
         const updatedCart = [...prev];
-        if (updatedCart[existingItemIndex].quantity === product.quantity) {
-          Swal.fire({
-            title: "Out of Stock",
-            text: "You can't add more of this product.",
-            icon: "error",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#651214ff",
-          });
-          return prev;
-        }
         updatedCart[existingItemIndex].quantity += 1;
         toast.success("Product quantity updated in cart!");
         return updatedCart;
       }
 
       toast.success("Product added to cart successfully!");
-      return [
-        ...prev,
-        {
-          quantity: 1,
-          product: product,
-        },
-      ];
+      return [...prev, { quantity: 1, product }];
     });
+
+    setStockData((prevStock) =>
+      prevStock.map((item) =>
+        item.productId === product.id
+          ? { ...item, stock: item.stock - 1 }
+          : item
+      )
+    );
   };
 
   return (

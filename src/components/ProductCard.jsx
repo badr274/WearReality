@@ -5,12 +5,19 @@ import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import { WishListContext } from "../context/WishListContext";
 import Aos from "aos";
+import { StockContext } from "../context/StockContext";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const { addToCart } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist } = useContext(WishListContext);
+  const { stockData } = useContext(StockContext);
+
+  const stockInfo = stockData.find((item) => item.productId === product.id);
+  const inStock = stockInfo ? stockInfo.stock > 0 : false;
+
   const handleAddToWishlist = (product) => {
     if (!token) {
       Swal.fire({
@@ -28,8 +35,6 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
     }
     addToWishlist(product);
   };
-
-  console.log("ProductCard", product);
 
   useEffect(() => {
     Aos.init({ duration: 1000 });
@@ -52,7 +57,17 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
         onClick={() => navigate(`/products/${product._id}`)}
       />
       <div className="card-body d-flex flex-column">
-        <h5 className="card-title fw-bold ">{product.title}</h5>
+        <div className="d-flex justify-content-between align-items-center">
+          <h5 className="card-title fw-bold">{product.title}</h5>
+          <span
+            className={`badge ${
+              inStock ? "bg-success" : "bg-danger"
+            } text-white`}
+          >
+            {inStock ? "In Stock" : "Out of Stock"}
+          </span>
+        </div>
+
         <p className="card-text text-muted small">
           {product.description.length < 80
             ? product.description
@@ -83,7 +98,6 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
               </div>
             )}
           </div>
-
           <div className="small text-warning ms-2">
             {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0}{" "}
             reviews)
@@ -96,6 +110,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
               className="btn flex-grow-1"
               style={{ backgroundColor: "#651214ff", color: "white" }}
               onClick={() => addToCart(product)}
+              disabled={!inStock}
             >
               Add to Cart
             </button>
