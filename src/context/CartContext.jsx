@@ -3,6 +3,8 @@ import toast from "react-hot-toast";
 import { AuthContext } from "./AuthContext";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+
+// eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext({});
 
 const CartProvider = ({ children }) => {
@@ -86,12 +88,14 @@ const CartProvider = ({ children }) => {
   };
 
   const isOutOfStock = (productId) => {
-  const item = cartItems.find((i) => i.product._id === productId);
-  return item && item.quantity >= 50;
-};
+    const item = cartItems.find((i) => i.product._id === productId);
+    return item && item.quantity >= 50;
+  };
 
   return (
-    <CartContext.Provider value={{ cartItems, setCartItems, addToCart, isOutOfStock }}>
+    <CartContext.Provider
+      value={{ cartItems, setCartItems, addToCart, isOutOfStock, totalPrice }}
+    >
       {children}
     </CartContext.Provider>
   );

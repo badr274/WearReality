@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import adminImage from "/images/admin.jpg";
 export default function Sidebar() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
@@ -26,12 +25,7 @@ export default function Sidebar() {
           color: "rgb(101, 18, 20)",
         }}
       >
-        <img
-          src={adminImage}
-          alt="admin image"
-          className="rounded-circle me-2"
-          style={{ width: "40px", height: "40px" }}
-        />
+        <i className="bi bi-person-fill me-2"></i>
         <span
           className="d-none d-lg-inline-block"
           style={{ cursor: "pointer" }}

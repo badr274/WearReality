@@ -2,7 +2,9 @@ import React, { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import img from "../cart/img.jpg";
 import { Link } from "react-router-dom";
-import CartItemComponent from "../../components/cart/CartItemComponent";
+// import CartItemComponent from "../../components/cart/CartItemComponent";
+import CartItemComponent from "./../../components/cart/CartItemComponent";
+import TotalCartComponent from "./../../components/cart/TotalCartComponent";
 
 const Cart = () => {
   const { cartItems } = useContext(CartContext);
@@ -28,6 +30,7 @@ const Cart = () => {
       ) : (
         <div className="container py-5">
           <h2 className="mb-4 text-white">Your Cart</h2>
+
           <div>
             {cartItems.map((item, i) => (
               <CartItemComponent key={i} cartItem={item} />

@@ -77,6 +77,8 @@ const ProductDetails = () => {
     axios
       .get(`https://ecommerce.routemisr.com/api/v1/products/${id}`)
       .then((res) => {
+        console.log(res.data.data);
+
         setProduct(res.data.data);
       })
       .catch((err) => {
@@ -131,7 +133,8 @@ const ProductDetails = () => {
                 Add to Cart
               </button>
               <button
-                className="btn flex-fill col-12 col-sm-5 btn-outline-primary"
+                className="btn flex-fill col-12 col-sm-5 "
+                style={{ background: "var(--secondary-color)" }}
                 onClick={() => setShowReviewModal(true)}
               >
                 Add Review

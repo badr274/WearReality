@@ -24,7 +24,7 @@ const TotalCartComponent = () => {
           <span style={{ color: "rgba(60, 62, 65, 1)" }} className="fw-bold">
             Total:
           </span>
-          <strong className="text-success">{totalPrice.toFixed(2)} EGP</strong>
+          <strong className="text-success">{totalPrice?.toFixed(2)} EGP</strong>
         </div>
         <div className="d-flex justify-content-between">
           <span style={{ color: "rgba(60, 62, 65, 1)" }} className="fw-bold">
