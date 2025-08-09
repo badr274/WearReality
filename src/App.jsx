@@ -41,14 +41,14 @@ function App() {
           <Route path="/wishlist" element={<WishList />} />
           <Route path="/payment" element={<PaymentPage />} />
         </Route>
-        <Route element={<ProtectedDashboard />}>
+        {/* <Route element={<ProtectedDashboard />}> */}
           <Route path="/dashboard" element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="customer" element={<Customer />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
-        </Route>
+        {/* </Route> */}
         <Route element={<PersistLogin />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
