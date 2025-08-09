@@ -121,6 +121,32 @@ export default function Sidebar() {
             <span className="d-none d-lg-inline-block flex-fill">Customer</span>
           </li>
         </Link>
+        <Link to="/dashboard/reviews" style={{ textDecoration: "none" }}>
+          <li
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "20px",
+              cursor: "pointer",
+              fontWeight: "500",
+              color: isActive("/dashboard/reviews")
+                ? "rgb(101, 18, 20)"
+                : "#595c5f",
+              backgroundColor: isActive("/dashboard/reviews")
+                ? "#4f4d4d7b"
+                : "transparent",
+              borderRadius: "8px",
+              padding: "8px",
+              gap: "10px",
+            }}
+          >
+            <i
+              className="bi bi-pencil-square mx-auto"
+              style={{ fontSize: "18px", width: "fit-content" }}
+            ></i>
+            <span className="d-none d-lg-inline-block flex-fill">Reviews</span>
+          </li>
+        </Link>
       </ul>
     </div>
   );

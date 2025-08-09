@@ -29,13 +29,14 @@ const Cart = () => {
       ) : (
         <>
           <h2 className="mb-5 text-center fw-bold fst-italic">Your Cart</h2>
-          <div className="row justify-content-between">
-            <div className="col-lg-9 col-12 mb-4">
+
+          <div className="row gap-5">
+            <div className="col-lg-9 col-12">
               {cartItems.map((item, i) => (
                 <CartItemComponent key={i} cartItem={item} />
               ))}
             </div>
-            <div className="col-lg-3 col-12">
+            <div className="col-lg-2 flex-lg-fill col-12 col-sm-8 m-auto">
               <TotalCartComponent />
             </div>
           </div>
