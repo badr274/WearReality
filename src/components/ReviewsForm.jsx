@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { ReviewsContext } from "../context/ReviewsContext";
 import { AuthContext } from "../context/AuthContext";
+import LoadingSpinner from "./LoadingSpinner";
 
 const ReviewsForm = ({
   showReviewModal,
@@ -9,6 +10,7 @@ const ReviewsForm = ({
   productCategory,
 }) => {
   const { userName } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const [reviewsData, setReviewsData] = useState({
     caption: "",
     numOfUse: "",
@@ -58,20 +60,22 @@ const ReviewsForm = ({
 
   const handleAddToUnderReview = () => {
     if (!validateForm()) return;
-
+    setLoading(true);
     setUnderReview((prev) => [
       ...prev,
       {
         reviewId: crypto.randomUUID(),
-        username: userName,
+        username: String(userName).split(" ")[0],
         productId,
         ...reviewsData,
         productCategory: productCategory,
         createdAt: new Date(),
       },
     ]);
-
-    handleCancelReview();
+    setTimeout(() => {
+      setLoading(false);
+      handleCancelReview();
+    }, 800);
   };
   return (
     showReviewModal && (
@@ -146,7 +150,7 @@ const ReviewsForm = ({
               className="btn btn-primary"
               onClick={handleAddToUnderReview}
             >
-              Add
+              {loading ? <LoadingSpinner message="" /> : "Add"}
             </button>
           </div>
         </div>

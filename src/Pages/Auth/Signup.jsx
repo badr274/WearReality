@@ -5,10 +5,12 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import "./Auth.css";
 import signupSchema from "../../validation/SignupShema";
+import { useState } from "react";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Signup = () => {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -19,19 +21,20 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       await axios.post(
         "https://ecommerce.routemisr.com/api/v1/auth/signup",
         data
       );
 
       toast.success("Account created successfully! Redirecting to login...");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      navigate("/login");
     } catch (error) {
       const errMsg =
         error.response?.data?.message || "Something went wrong. Try again.";
       toast.error(errMsg);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,7 +47,6 @@ const Signup = () => {
         className="mx-auto"
         style={{ maxWidth: "50%" }}
       >
-        {/* name */}
         <div className="mb-3">
           <label className="form-label fw-bold" htmlFor="name">
             Name
@@ -53,7 +55,6 @@ const Signup = () => {
           {errors.name && <p className="text-danger">{errors.name.message}</p>}
         </div>
 
-        {/* email */}
         <div className="mb-3">
           <label className="form-label fw-bold" htmlFor="email">
             Email
@@ -69,7 +70,6 @@ const Signup = () => {
           )}
         </div>
 
-        {/* password */}
         <div className="mb-3">
           <label className="form-label fw-bold" htmlFor="password">
             Password
@@ -85,7 +85,6 @@ const Signup = () => {
           )}
         </div>
 
-        {/* rePassword */}
         <div className="mb-3">
           <label className="form-label fw-bold" htmlFor="rePassword">
             Re-Enter Password
@@ -101,7 +100,6 @@ const Signup = () => {
           )}
         </div>
 
-        {/* phone */}
         <div className="mb-3">
           <label className="form-label fw-bold" htmlFor="phone">
             Phone
@@ -118,12 +116,15 @@ const Signup = () => {
         </div>
 
         <button type="submit" className="btn w-100 fw-bold submit-btn">
-          Signup
+          {loading ? <LoadingSpinner /> : "Signup"}
         </button>
       </form>
 
       <p className="mt-3 text-center">
-        Already have an account? <Link to="/login">Login</Link>
+        Already have an account?
+        <Link to="/login" style={{ color: "var(--main-color)" }}>
+          Login
+        </Link>
       </p>
     </div>
   );
