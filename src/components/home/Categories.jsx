@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import CategoriesSliderSkeleton from "./CategoriesSliderSkeleton";
+import ProductSkeleton from "./ProductSkeleton";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -34,7 +34,7 @@ const Categories = () => {
   const renderSkeleton = Array.from({ length: 8 }).map((_, i) => {
     return (
       <SwiperSlide key={i}>
-        <CategoriesSliderSkeleton />
+        <ProductSkeleton />
       </SwiperSlide>
     );
   });

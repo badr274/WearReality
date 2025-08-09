@@ -4,13 +4,19 @@ import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import { WishListContext } from "../context/WishListContext";
+import { StockContext } from "../context/StockContext";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
   const { addToCart, isOutOfStock } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist } = useContext(WishListContext);
+  const { stockData } = useContext(StockContext);
+
   const outOfStock = isOutOfStock(product._id);
+  const stockInfo = stockData.find((item) => item.productId === product.id);
+  const inStock = stockInfo ? stockInfo.stock > 0 : false;
 
   const handleAddToWishlist = () => {
     if (!token) {
@@ -79,7 +85,17 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
       />
 
       <div className="card-body d-flex flex-column">
-        <h5 className="card-title fw-bold ">{product.title}</h5>
+        <div className="d-flex justify-content-between align-items-center">
+          <h5 className="card-title fw-bold">{product.title}</h5>
+          <span
+            className={`badge ${
+              inStock ? "bg-success" : "bg-danger"
+            } text-white`}
+          >
+            {inStock ? "In Stock" : "Out of Stock"}
+          </span>
+        </div>
+
         <p className="card-text text-muted small">
           {product.description.length < 80
             ? product.description
@@ -111,7 +127,6 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
               </div>
             )}
           </div>
-
           <div className="small text-warning ms-2">
             {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0}{" "}
             reviews)

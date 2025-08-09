@@ -1,15 +1,17 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthContext";
+import { StockContext } from "./StockContext";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext({});
 
 const CartProvider = ({ children }) => {
   const { token } = useContext(AuthContext);
+  const { stockData, setStockData } = useContext(StockContext);
   const navigate = useNavigate();
+
   const getStoredCart = () => {
     try {
       const stored = localStorage.getItem("cartItems");
@@ -34,6 +36,7 @@ const CartProvider = ({ children }) => {
       setCartItems([]);
     }
   }, [token]);
+
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -50,6 +53,18 @@ const CartProvider = ({ children }) => {
         if (result.isConfirmed) {
           navigate("/login");
         }
+      });
+      return;
+    }
+
+    const stockItem = stockData.find((item) => item.productId === product.id);
+    if (!stockItem || stockItem.stock <= 0) {
+      Swal.fire({
+        title: "Out of Stock",
+        text: "This product is out of stock.",
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#651214ff",
       });
       return;
     }
@@ -77,14 +92,16 @@ const CartProvider = ({ children }) => {
       }
 
       toast.success("Product added to cart successfully!");
-      return [
-        ...prev,
-        {
-          quantity: 1,
-          product: product,
-        },
-      ];
+      return [...prev, { quantity: 1, product }];
     });
+
+    setStockData((prevStock) =>
+      prevStock.map((item) =>
+        item.productId === product.id
+          ? { ...item, stock: item.stock - 1 }
+          : item
+      )
+    );
   };
 
   const isOutOfStock = (productId) => {

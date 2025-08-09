@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
+import ProductSkeleton from "../components/home/ProductSkeleton";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -37,20 +38,6 @@ export default function Products() {
       });
   };
 
-  // const addToCart = (product) => {
-  //   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  //   const productExists = cart.find((item) => item._id === product._id);
-
-  //   if (productExists) {
-  //     productExists.quantity += 1;
-  //   } else {
-  //     cart.push({ ...product, quantity: 1 });
-  //   }
-
-  //   localStorage.setItem("cart", JSON.stringify(cart));
-  //   alert(`${product.title} added to cart!`);
-  // };
-
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     fetchProducts(category);
@@ -63,7 +50,6 @@ export default function Products() {
   return (
     <div className="container mt-5">
       <div className="row">
-        {/* Sidebar for md screens */}
         <div className="col-md-3 d-none d-md-block">
           <ul
             className="shadow-sm p-3"
@@ -110,7 +96,6 @@ export default function Products() {
           </ul>
         </div>
 
-        {/* Dropdown Sidebar for sm screens */}
         <div className="col-12 d-md-none mb-3">
           <div className="dropdown">
             <button
@@ -156,9 +141,7 @@ export default function Products() {
           </div>
         </div>
 
-        {/* Product Grid */}
         <div className="col-12 col-md-9">
-          {/* <h1 className="mb-5 text-center fw-bold fst-italic">Your Wishlist</h1> */}
           <h2
             style={{ color: "#651214ff" }}
             className="fw-bold mb-4 fst-italic"
@@ -166,18 +149,21 @@ export default function Products() {
             {selectedCategory === "all" ? "All Products" : selectedCategory}
           </h2>
           <div className="row">
-            {products.map((product) => (
-              <div key={product._id} className="col-12 col-sm-6 col-lg-4 mb-4">
-                <ProductCard product={product} showButtons={true} />
-              </div>
-            ))}
+            {loading
+              ? Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="col-12 col-sm-6 col-lg-4 mb-4">
+                    <ProductSkeleton showContent={true} showBtns={true} />
+                  </div>
+                ))
+              : products.map((product) => (
+                  <div
+                    key={product._id}
+                    className="col-12 col-sm-6 col-lg-4 mb-4"
+                  >
+                    <ProductCard product={product} showButtons={true} />
+                  </div>
+                ))}
           </div>
-
-          {loading && (
-            <div className="text-center mt-4">
-              <p>Loading...</p>
-            </div>
-          )}
         </div>
       </div>
     </div>
