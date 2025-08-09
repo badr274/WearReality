@@ -32,7 +32,7 @@ const PaymentPage = () => {
 
   return (
     <div className="container py-5 bg-white position-relative">
-      <ToastContainer />
+      
 
       <div className="row align-items-center">
         <div className="col-md-6 d-flex justify-content-center mb-4 mb-md-0">

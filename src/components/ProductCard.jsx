@@ -1,10 +1,14 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import { WishListContext } from "../context/WishListContext";
+<<<<<<< HEAD
 
+=======
+import Aos from "aos";
+>>>>>>> 6b181a6f586d540f02271e5d2edfeb1b290ad5ab
 const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -30,6 +34,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
     addToWishlist(product);
   };
 
+<<<<<<< HEAD
   const handleAddToCart = () => {
     if (isOutOfStock) {
       Swal.fire({
@@ -42,6 +47,11 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
     }
     addToCart(product);
   };
+=======
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+  }, []);
+>>>>>>> 6b181a6f586d540f02271e5d2edfeb1b290ad5ab
 
   return (
     <div
@@ -50,6 +60,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
         boxShadow: "0 25px 50px rgba(74, 74, 74, 0.69)",
         border: "none",
       }}
+      data-aos="fade-up"
     >
       {outOfStock && (
         <div
@@ -149,4 +160,8 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   );
 };
 
+<<<<<<< HEAD
 export default ProductCard;
+=======
+export default ProductCard;
+>>>>>>> 6b181a6f586d540f02271e5d2edfeb1b290ad5ab

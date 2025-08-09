@@ -6,7 +6,7 @@ const Contact = () => {
   return (
     <div className="contact-container" id="Contact">
       <div className="contact-box">
-        <h1 className="contact-title fst-italic">Get in touch</h1>
+        <h2 className="contact-title">Get in touch</h2>
         <p className="contact-subtitle">
           Need assistance? Our team is just a message away.
         </p>
@@ -15,7 +15,7 @@ const Contact = () => {
           <label className="contact-label"> EMAIL *</label>
           <div className="input-wrapper">
             <FaEnvelope className="icon" />
-            <input type="email" placeholder="Ex. yourname@gmail.com" required />
+            <input type="email"placeholder="Ex. yourname@gmail.com"required/>
           </div>
 
           <label className="contact-label">YOUR NAME</label>
