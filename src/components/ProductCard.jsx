@@ -1,17 +1,18 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import { WishListContext } from "../context/WishListContext";
-import Aos from "aos";
+
 const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, isOutOfStock } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist } = useContext(WishListContext);
-  const handleAddToWishlist = (product) => {
+  const outOfStock = isOutOfStock(product._id);
+
+  const handleAddToWishlist = () => {
     if (!token) {
       Swal.fire({
         title: "Login Required",
@@ -29,21 +30,46 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
     addToWishlist(product);
   };
 
-  console.log("ProductCard", product);
-
-  useEffect(() => {
-    Aos.init({ duration: 1000 });
-  }, []);
+  const handleAddToCart = () => {
+    if (outOfStock) {
+      Swal.fire({
+        title: "Out of Stock",
+        text: "This product is out of stock.",
+        icon: "error",
+        confirmButtonColor: "#651214ff",
+      });
+      return;
+    }
+    addToCart(product);
+  };
 
   return (
     <div
-      className="card h-100 shadow-sm"
+      className="card h-100 shadow-sm position-relative"
       style={{
         boxShadow: "0 25px 50px rgba(74, 74, 74, 0.69)",
         border: "none",
       }}
       data-aos="fade-up"
     >
+      {outOfStock && (
+        <div
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "-30px",
+            backgroundColor: "#651214ff",
+            color: "white",
+            padding: "5px 40px",
+            transform: "rotate(-45deg)",
+            fontWeight: "bold",
+            zIndex: 10,
+          }}
+        >
+          Out of Stock
+        </div>
+      )}
+
       <img
         src={product.imageCover || product.images?.[0]}
         className="card-img-top w-100"
@@ -51,6 +77,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
         style={{ height: "250px", objectFit: "cover", cursor: "pointer" }}
         onClick={() => navigate(`/products/${product._id}`)}
       />
+
       <div className="card-body d-flex flex-column">
         <h5 className="card-title fw-bold ">{product.title}</h5>
         <p className="card-text text-muted small">
@@ -58,6 +85,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
             ? product.description
             : `${product.description.slice(0, 80)}...`}
         </p>
+
         <div className="mt-auto d-flex justify-content-between align-items-center">
           <div>
             <div className="mb-1">
@@ -85,19 +113,25 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
           </div>
 
           <div className="small text-warning ms-2">
-            {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0}{" "}
-            reviews)
+            {product.ratingsAverage || "N/A"} ({product.ratingsQuantity || 0} reviews)
           </div>
         </div>
 
         {showButtons && (
           <div className="d-flex flex-wrap gap-2 mt-2">
             <button
-              className="btn flex-grow-1"
-              style={{ backgroundColor: "#651214ff", color: "white" }}
-              onClick={() => addToCart(product)}
+              onClick={handleAddToCart}
+              disabled={outOfStock}
+              style={{
+                backgroundColor: outOfStock ? "gray" : "#651214",
+                color: "white",
+                border: "none",
+                padding: "10px 20px",
+                cursor: outOfStock ? "not-allowed" : "pointer",
+                borderRadius: "5px",
+              }}
             >
-              Add to Cart
+              {outOfStock ? "Out of Stock" : "Add to Cart"}
             </button>
             <button
               className="btn flex-grow-1"
@@ -105,7 +139,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
               onClick={
                 isWishlist
                   ? () => removeFromWishlist(product._id)
-                  : () => handleAddToWishlist(product)
+                  : handleAddToWishlist
               }
             >
               {isWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
