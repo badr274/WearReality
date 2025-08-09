@@ -1,15 +1,16 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import { WishListContext } from "../context/WishListContext";
+
 const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
   const { addToCart, isOutOfStock } = useContext(CartContext);
-  const outOfStock = isOutOfStock(product._id);
   const { addToWishlist, removeFromWishlist } = useContext(WishListContext);
+  const outOfStock = isOutOfStock(product._id);
 
   const handleAddToWishlist = () => {
     if (!token) {
@@ -30,7 +31,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   };
 
   const handleAddToCart = () => {
-    if (isOutOfStock) {
+    if (outOfStock) {
       Swal.fire({
         title: "Out of Stock",
         text: "This product is out of stock.",
@@ -62,7 +63,7 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
             padding: "5px 40px",
             transform: "rotate(-45deg)",
             fontWeight: "bold",
-            zIndex: 10
+            zIndex: 10,
           }}
         >
           Out of Stock
@@ -119,14 +120,15 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
         {showButtons && (
           <div className="d-flex flex-wrap gap-2 mt-2">
             <button
-              onClick={() => addToCart(product)}
+              onClick={handleAddToCart}
               disabled={outOfStock}
               style={{
                 backgroundColor: outOfStock ? "gray" : "#651214",
                 color: "white",
                 border: "none",
                 padding: "10px 20px",
-                cursor: outOfStock ? "not-allowed" : "pointer"
+                cursor: outOfStock ? "not-allowed" : "pointer",
+                borderRadius: "5px",
               }}
             >
               {outOfStock ? "Out of Stock" : "Add to Cart"}
