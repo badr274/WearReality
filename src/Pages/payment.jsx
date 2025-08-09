@@ -1,9 +1,11 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Swal from "sweetalert2";
-import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router";
+import { CartContext } from "../context/CartContext";
 
 const PaymentPage = () => {
+  const navigate = useNavigate();
   const { totalPrice } = useContext(CartContext);
   const [formData, setFormData] = useState({
     cardNumber: "",
@@ -13,7 +15,6 @@ const PaymentPage = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,28 +22,61 @@ const PaymentPage = () => {
 
   const handleSubmit = () => {
     const newErrors = {};
-    if (!formData.cardNumber) newErrors.cardNumber = "Card Number is required";
-    if (!formData.nameCard) newErrors.nameCard = "Cardholder name is required";
-    if (!formData.expires) newErrors.expires = "Expiration date is required";
-    if (!formData.ccv) newErrors.ccv = "CCV is required";
+
+    if (!/^\d{16}$/.test(formData.cardNumber)) {
+      newErrors.cardNumber = "Card Number must be exactly 16 digits";
+    }
+
+    if (!formData.nameCard.trim()) {
+      newErrors.nameCard = "Card name is required";
+    } else if (!/^[A-Za-z\s]+$/.test(formData.nameCard)) {
+      newErrors.nameCard = "Name must contain letters only";
+    }
+
+    if (!formData.expires) {
+      newErrors.expires = "Expiration date is required";
+    } else {
+      const [month, year] = formData.expires
+        .split("/")
+        .map((str) => str.trim());
+      const currentDate = new Date();
+      const inputDate = new Date(`20${year}`, month - 1);
+
+      if (
+        !month ||
+        !year ||
+        isNaN(month) ||
+        isNaN(year) ||
+        month < 1 ||
+        month > 12
+      ) {
+        newErrors.expires = "Invalid date format (MM / YY)";
+      } else if (inputDate <= currentDate) {
+        newErrors.expires = "Expiration date must be in the future";
+      }
+    }
+
+    if (!/^\d{3}$/.test(formData.ccv)) {
+      newErrors.ccv = "CCV must be exactly 3 digits";
+    }
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length > 0) return;
-
-    Swal.fire({
-      title: `Are you sure you want to pay ${totalPrice.toFixed(2)} EGP?`,
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, place order",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("Your order has been placed!", "", "success");
-        navigate("/");
-      }
-    });
+    if (Object.keys(newErrors).length == 0) {
+      Swal.fire({
+        title: `Are you sure you want to pay ${totalPrice.toFixed(2)} EGP?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, place order",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Your order has been placed!", "", "success");
+          navigate("/");
+        }
+      });
+    }
   };
 
   return (
@@ -219,7 +253,7 @@ const PaymentPage = () => {
               color: "#e3e3e3ff",
               borderRadius: "25px",
             }}
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
           >
             Place Your Order
           </button>

@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import img from "../cart/img.jpg";
 import { Link } from "react-router-dom";
-import CartItemComponent from "../../components/cart/CartItemComponent";
-import TotalCartComponent from "../../components/cart/TotalCartComponent";
+import CartItemComponent from "./../../components/cart/CartItemComponent";
+import TotalCartComponent from "./../../components/cart/TotalCartComponent";
 
 const Cart = () => {
   const { cartItems } = useContext(CartContext);
 
   return (
-    <div className="container py-5">
+    <div className="">
       {cartItems.length === 0 ? (
         <div className="min-vh-100 d-flex justify-content-center align-items-center flex-column text-center">
           <img

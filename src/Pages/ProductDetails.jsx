@@ -239,21 +239,20 @@ const ProductDetails = () => {
                                         : "washes"
                                     }`
                                   : `After ${proofData[idx]?.uses} ${
-                                      proofData[idx]?.uses === 1
-                                        ? "use"
-                                        : "uses"
+                                      proofData[idx]?.uses === 1 ? "use" : "uses"
                                     }`}
                               </span>
                             </div>
                             <div className="text-start small text-muted">
                               <span>Posted on: </span>
-                              {new Date(
-                                proofData[idx]?.uploadedAt
-                              ).toLocaleDateString("en-US", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              })}
+                              {new Date(proofData[idx]?.uploadedAt).toLocaleDateString(
+                                "en-US",
+                                {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                }
+                              )}
                             </div>
                           </div>
                         </div>
