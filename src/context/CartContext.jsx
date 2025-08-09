@@ -1,14 +1,17 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthContext";
+import { StockContext } from "./StockContext";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
-// eslint-disable-next-line react-refresh/only-export-components
+
 export const CartContext = createContext({});
 
 const CartProvider = ({ children }) => {
   const { token } = useContext(AuthContext);
+  const { stockData, setStockData } = useContext(StockContext);
   const navigate = useNavigate();
+
   const getStoredCart = () => {
     try {
       const stored = localStorage.getItem("cartItems");
@@ -33,6 +36,7 @@ const CartProvider = ({ children }) => {
       setCartItems([]);
     }
   }, [token]);
+
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -53,6 +57,18 @@ const CartProvider = ({ children }) => {
       return;
     }
 
+    const stockItem = stockData.find((item) => item.productId === product.id);
+    if (!stockItem || stockItem.stock <= 0) {
+      Swal.fire({
+        title: "Out of Stock",
+        text: "This product is out of stock.",
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#651214ff",
+      });
+      return;
+    }
+
     setCartItems((prev) => {
       const existingItemIndex = prev.findIndex(
         (item) => item.product._id === product._id
@@ -60,10 +76,10 @@ const CartProvider = ({ children }) => {
 
       if (existingItemIndex !== -1) {
         const updatedCart = [...prev];
-        if (updatedCart[existingItemIndex].quantity === product.quantity) {
+        if (updatedCart[existingItemIndex].quantity >= 50) {
           Swal.fire({
             title: "Out of Stock",
-            text: "You can't add more of this product.",
+            text: `You already have ${updatedCart[existingItemIndex].quantity} units of this product in your cart. You can't add more than 50.`,
             icon: "error",
             confirmButtonText: "OK",
             confirmButtonColor: "#651214ff",
@@ -76,19 +92,26 @@ const CartProvider = ({ children }) => {
       }
 
       toast.success("Product added to cart successfully!");
-      return [
-        ...prev,
-        {
-          quantity: 1,
-          product: product,
-        },
-      ];
+      return [...prev, { quantity: 1, product }];
     });
+
+    setStockData((prevStock) =>
+      prevStock.map((item) =>
+        item.productId === product.id
+          ? { ...item, stock: item.stock - 1 }
+          : item
+      )
+    );
+  };
+
+  const isOutOfStock = (productId) => {
+    const item = cartItems.find((i) => i.product._id === productId);
+    return item && item.quantity >= 50;
   };
 
   return (
     <CartContext.Provider
-      value={{ cartItems, setCartItems, addToCart, totalPrice }}
+      value={{ cartItems, setCartItems, addToCart, isOutOfStock, totalPrice }}
     >
       {children}
     </CartContext.Provider>

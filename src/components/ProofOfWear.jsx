@@ -25,7 +25,7 @@ const ProofOfWear = ({ review, showBtns = false, className }) => {
   return (
     <div
       className={`border rounded p-3 shadow-sm bg-white  ${className}`}
-      style={{ maxWidth: "400px" }}
+      style={{ maxWidth: "100%" }}
     >
       <img
         src={review.image}

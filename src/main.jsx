@@ -12,18 +12,21 @@ import WishListProvider from "./context/WishListContext.jsx";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import ReviewsProvider from "./context/ReviewsContext.jsx";
+import StockProvider from "./context/StockContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthProvider>
-      <CartProvider>
-        <WishListProvider>
-          <ReviewsProvider>
-            <Toaster position="top center" />
-            <App />
-          </ReviewsProvider>
-        </WishListProvider>
-      </CartProvider>
+      <StockProvider>
+        <CartProvider>
+          <WishListProvider>
+            <ReviewsProvider>
+              <Toaster position="top center" />
+              <App />
+            </ReviewsProvider>
+          </WishListProvider>
+        </CartProvider>
+      </StockProvider>
     </AuthProvider>
   </BrowserRouter>
 );
