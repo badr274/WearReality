@@ -29,6 +29,8 @@ const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
     addToWishlist(product);
   };
 
+  console.log("ProductCard", product);
+
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);

@@ -51,19 +51,19 @@ export default function CartItemComponent({ cartItem }) {
 
   return (
     <div
-      className="row align-items-center border-bottom py-3 overflow-auto"
+      className="row align-items-center justify-content-around border-bottom py-3 overflow-auto "
       data-aos="fade-right"
     >
-      <div className="col-2">
+      <div className="col-12 col-md-2 d-flex justify-content-center">
         <img src={cartItem?.product?.imageCover} className="w-50" alt="item" />
       </div>
-      <div className="col-3">
+      <div className="col-2">
         <h6>{cartItem?.product?.title}</h6>
       </div>
       <div className="col-3">
         <div className="d-flex align-items-center">
           <button
-            className="btn btn-outline-secondary "
+            className="btn btn-outline-secondary"
             onClick={() => handleDecreaseQuantity(cartItem?.product._id)}
           >
             -
@@ -82,7 +82,7 @@ export default function CartItemComponent({ cartItem }) {
           </button>
         </div>
       </div>
-      <div className="col-2 fw-bold">
+      <div className="col-2 fw-bold ">
         {(cartItem?.product?.price * cartItem?.quantity).toFixed(2)}
       </div>
       <div className="col-2">

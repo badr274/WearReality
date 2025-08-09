@@ -9,11 +9,11 @@ const MyNavbar = () => {
 
   const navLinks = [
     { name: "Home", id: "home", href: "/" },
-    { name: "Cart", id: "cart", href: "/cart" },
     { name: "Products", id: "products", href: "/products" },
+    { name: "Cart", id: "cart", href: "/cart" },
+    { name: "Wishlist", id: "Wishlist", href: "/wishlist" },
     { name: "About", id: "About", href: "/about" },
     { name: "Contact", id: "Contact", href: "/contact" },
-    { name: "Wishlist", id: "Wishlist", href: "/wishlist" },
     ...(token && role === "admin"
       ? [{ name: "Dashboard", id: "dashboard", href: "/dashboard" }]
       : []),
@@ -32,7 +32,7 @@ const MyNavbar = () => {
       style={{ backgroundColor: "#f6f2f2ff" }}
     >
       <div className="container d-flex justify-content-between">
-        <a className="navbar-brand d-flex align-items-center" href="#">
+        <a className="navbar-brand d-flex align-items-center" href="/">
           <i
             className="bi bi-cart-fill fs-4 me-2"
             style={{ color: "#651214" }}
