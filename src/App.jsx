@@ -21,6 +21,7 @@ import Customer from "./Pages/Admin/Customer";
 import PaymentPage from "./Pages/payment";
 import ProtectedDashboard from "./components/routes/ProtectedDashboard";
 import PageNotFound from "./Pages/pageNotFound/PageNotFound";
+import Reviews from "./Pages/Admin/Reviews";
 function App() {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith("/dashboard");
@@ -45,6 +46,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="customer" element={<Customer />} />
+            <Route path="reviews" element={<Reviews />} />
           </Route>
         {/* </Route> */}
         <Route element={<PersistLogin />}>

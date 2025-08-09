@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function Dashboard() {
   const [products, setProducts] = useState([]);
@@ -14,6 +15,27 @@ export default function Dashboard() {
     status: "",
   });
   const [searchTerm, setSearchTerm] = useState("");
+
+  const deleteAlert = (product) => {
+    Swal.fire({
+      title: `Are you sure you want to delete ${product.name}?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        handleDelete(products.indexOf(product));
+      }
+    });
+  };
 
   const statusColors = {
     Pending: "badge bg-warning",
@@ -194,7 +216,7 @@ export default function Dashboard() {
                         backgroundColor: "#651214ff",
                         color: "#efefefff",
                       }}
-                      onClick={() => handleDelete(idx)}
+                      onClick={() => deleteAlert(p)}
                     >
                       Delete
                     </button>

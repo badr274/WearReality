@@ -33,8 +33,9 @@ const Login = () => {
       );
 
       const token = res.data.token;
-      if (token) {
-        login(token);
+      const username = res.data.user.name;
+      if (token && username) {
+        login(token, username);
       }
 
       toast.success("Login successful! Redirecting to home...");

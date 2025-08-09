@@ -16,9 +16,8 @@ const Cart = () => {
             src={img}
             alt="Empty Cart"
             className="my-4"
-            style={{ width: "400px" }}
+            style={{ width: "400px", maxWidth: "100%" }}
           />
-
           <Link
             to="/Products"
             className="btn btn-success text-white"
@@ -30,6 +29,7 @@ const Cart = () => {
       ) : (
         <>
           <h2 className="mb-5 text-center fw-bold fst-italic">Your Cart</h2>
+
           <div className="row gap-5">
             <div className="col-lg-9 col-12">
               {cartItems.map((item, i) => (
