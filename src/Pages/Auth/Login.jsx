@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Auth.css";
-import loginSchema from "../../validation/loginShcema";
+import loginSchema from "../../validation/loginShcema.js";
 import toast from "react-hot-toast";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";

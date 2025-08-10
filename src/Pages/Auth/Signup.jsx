@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import "./Auth.css";
-import signupSchema from "../../validation/SignupShema";
+import signupSchema from "../../validation/signupShema.js";
 import { useState } from "react";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
