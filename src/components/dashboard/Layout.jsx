@@ -1,7 +1,7 @@
-import React from "react";
-import Sidebar from "../components/SideBar";
+import SideBar from "./SideBar";
 import { Outlet } from "react-router-dom";
 import "./layout.css";
+
 export default function Layout() {
   return (
     <div
@@ -11,14 +11,10 @@ export default function Layout() {
         backgroundColor: "#f5f6fa",
       }}
     >
-      <Sidebar />
-      {/* <div style={{ marginLeft: "250px", padding: "40px", width: "100%" }}> */}
+      <SideBar />
       <div className="dashboard-content">
         <Outlet />
       </div>
-
-      {/* </div> */}
-      {/* </div> */}
     </div>
   );
 }

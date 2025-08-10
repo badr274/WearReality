@@ -5,6 +5,7 @@ import { StockContext } from "./StockContext";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext({});
 
 const CartProvider = ({ children }) => {
