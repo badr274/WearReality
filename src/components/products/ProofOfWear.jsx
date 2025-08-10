@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { ReviewsContext } from "../context/ReviewsContext";
-import LoadingSpinner from "./LoadingSpinner";
+import { ReviewsContext } from "../../context/ReviewsContext";
+import LoadingSpinner from "../LoadingSpinner";
 
 const ProofOfWear = ({ review, showBtns = false, className }) => {
   const [loading, setLoading] = useState(false);

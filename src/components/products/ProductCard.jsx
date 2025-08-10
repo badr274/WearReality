@@ -1,11 +1,10 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { CartContext } from "../context/CartContext";
-import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
-import { WishListContext } from "../context/WishListContext";
-import { StockContext } from "../context/StockContext";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { AuthContext } from "../../context/AuthContext";
+import { CartContext } from "../../context/CartContext";
+import { WishListContext } from "../../context/WishListContext";
+import { StockContext } from "../../context/StockContext";
 
 const ProductCard = ({ product, showButtons = false, isWishlist = false }) => {
   const { token } = useContext(AuthContext);

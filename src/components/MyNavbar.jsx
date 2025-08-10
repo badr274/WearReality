@@ -6,6 +6,7 @@ const MyNavbar = () => {
   const { token, logout } = useContext(AuthContext);
   const role = localStorage.getItem("role");
   const [activeLink, setActiveLink] = useState("home");
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const navLinks = [
     { name: "Home", id: "home", href: "/" },
@@ -26,9 +27,18 @@ const MyNavbar = () => {
     transition: "color 0.3s",
   });
 
+  const toggleNavbar = () => setIsCollapsed(!isCollapsed);
+
+  const handleLinkClick = (id) => {
+    setActiveLink(id);
+    if (!isCollapsed) {
+      setIsCollapsed(true); // تقفل القائمة لما تضغط على اللينك
+    }
+  };
+
   return (
     <nav
-      className="navbar  navbar-expand-lg border-bottom py-2 shadow-sm"
+      className="navbar navbar-expand-lg border-bottom py-2 shadow-sm"
       style={{ backgroundColor: "#f6f2f2ff" }}
     >
       <div className="container d-flex justify-content-between">
@@ -44,17 +54,18 @@ const MyNavbar = () => {
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
+          onClick={toggleNavbar}
           aria-controls="navbarContent"
-          aria-expanded="false"
+          aria-expanded={!isCollapsed}
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
         <div
-          className="collapse navbar-collapse justify-content-between"
+          className={`collapse navbar-collapse justify-content-between ${
+            isCollapsed ? "" : "show"
+          }`}
           id="navbarContent"
         >
           <ul className="navbar-nav mb-2 mb-lg-0 flex-lg-row gap-lg-3 me-lg-auto ms-lg-auto">
@@ -63,7 +74,7 @@ const MyNavbar = () => {
                 <Link
                   to={link.href}
                   style={linkStyle(link.id)}
-                  onClick={() => setActiveLink(link.id)}
+                  onClick={() => handleLinkClick(link.id)}
                   onMouseEnter={(e) => {
                     if (activeLink !== link.id)
                       e.target.style.color = "#651214";
@@ -113,6 +124,7 @@ const MyNavbar = () => {
                   to="/login"
                   className="signout-link text-decoration-none"
                   style={{ color: "#651214", fontWeight: "bold" }}
+                  onClick={() => setIsCollapsed(true)}
                 >
                   Log in
                 </Link>
@@ -120,6 +132,7 @@ const MyNavbar = () => {
                   to="/signup"
                   className="signout-link text-decoration-none"
                   style={{ color: "#651214", fontWeight: "bold" }}
+                  onClick={() => setIsCollapsed(true)}
                 >
                   Signup
                 </Link>

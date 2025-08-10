@@ -1,15 +1,15 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { CartContext } from "../context/CartContext";
-import { StockContext } from "../context/StockContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import { ReviewsContext } from "../context/ReviewsContext";
-import ReviewsForm from "../components/ReviewsForm";
-import ProofOfWear from "../components/ProofOfWear";
-import ProductDetailsSkeleton from "../components/ProductDetailsSkeleton";
+import { ReviewsContext } from "../../context/ReviewsContext";
+import { CartContext } from "../../context/CartContext";
+import { StockContext } from "../../context/StockContext";
+import ReviewsForm from "../../components/products/ReviewsForm";
+import ProofOfWear from "../../components/products/ProofOfWear";
+import ProductDetailsSkeleton from "../../components/products/ProductDetailsSkeleton";
 
 const proofOfWearData = [
   {
@@ -239,20 +239,21 @@ const ProductDetails = () => {
                                         : "washes"
                                     }`
                                   : `After ${proofData[idx]?.uses} ${
-                                      proofData[idx]?.uses === 1 ? "use" : "uses"
+                                      proofData[idx]?.uses === 1
+                                        ? "use"
+                                        : "uses"
                                     }`}
                               </span>
                             </div>
                             <div className="text-start small text-muted">
                               <span>Posted on: </span>
-                              {new Date(proofData[idx]?.uploadedAt).toLocaleDateString(
-                                "en-US",
-                                {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "numeric",
-                                }
-                              )}
+                              {new Date(
+                                proofData[idx]?.uploadedAt
+                              ).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              })}
                             </div>
                           </div>
                         </div>
