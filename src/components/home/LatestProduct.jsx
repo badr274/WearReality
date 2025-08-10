@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ProductCard from "../ProductCard";
 import ProductSkeleton from "./ProductSkeleton";
+import ProductCard from "../products/ProductCard";
 
 export default function LatestProduct() {
   const [products, setProducts] = useState([]);

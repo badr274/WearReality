@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ReviewsContext } from "../../context/ReviewsContext";
-import ProofOfWear from "../../components/ProofOfWear";
+import ProofOfWear from "../../components/products/ProofOfWear";
 
 const Reviews = () => {
   const { underReview } = useContext(ReviewsContext);

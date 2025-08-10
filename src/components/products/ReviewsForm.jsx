@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
-import { ReviewsContext } from "../context/ReviewsContext";
-import { AuthContext } from "../context/AuthContext";
-import LoadingSpinner from "./LoadingSpinner";
+import { AuthContext } from "../../context/AuthContext";
+import { ReviewsContext } from "../../context/ReviewsContext";
+import LoadingSpinner from "../LoadingSpinner";
 
 const ReviewsForm = ({
   showReviewModal,
