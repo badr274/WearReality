@@ -41,7 +41,7 @@ export default function PageNotFound() {
           Go Home
         </button>
 
-        <button 
+        <button
           onClick={() => navigate("/Contact")}
           className="btn not-found-btn fw-bold px-4 py-2"
           style={{
