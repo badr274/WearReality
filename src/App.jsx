@@ -20,6 +20,14 @@ import PaymentPage from "./Pages/payment";
 import ProtectedDashboard from "./components/routes/ProtectedDashboard";
 import PageNotFound from "./Pages/pageNotFound/PageNotFound";
 import Reviews from "./Pages/Admin/Reviews";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+
+useEffect(() => {
+  AOS.init({ duration: 1000 });
+}, []);
+
 function App() {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith("/dashboard");
