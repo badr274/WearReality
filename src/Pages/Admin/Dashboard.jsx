@@ -49,14 +49,27 @@ export default function Dashboard() {
   };
 
   const handleAddOrUpdateProduct = () => {
-    if (Object.values(newProduct).some((field) => field === "")) return;
+    if (
+      Object.values({ ...newProduct, id: newProduct.id || "temp" }).some(
+        (field) => field === ""
+      )
+    )
+      return;
+
+    // Auto-generate ID if adding a new product
+    const productWithId = {
+      ...newProduct,
+      id: newProduct.id || `local-${Date.now()}`, // unique local id
+    };
+
     if (editIndex !== null) {
       const updatedProducts = [...products];
-      updatedProducts[editIndex] = newProduct;
+      updatedProducts[editIndex] = productWithId;
       setProducts(updatedProducts);
     } else {
-      setProducts([newProduct, ...products]);
+      setProducts([productWithId, ...products]);
     }
+
     setShowModal(false);
     setNewProduct({
       name: "",
@@ -86,12 +99,12 @@ export default function Dashboard() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        setProducts((prev) => prev.filter((_, i) => i !== index)); // remove product
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",
           icon: "success",
         });
-        handleDelete(products.indexOf(index));
       }
     });
   };
