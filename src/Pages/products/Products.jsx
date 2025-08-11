@@ -12,22 +12,30 @@ export default function Products() {
   const fetchProducts = (category = "") => {
     setLoading(true);
     let url = "https://ecommerce.routemisr.com/api/v1/products";
+
     axios
       .get(url)
       .then((response) => {
         const allProducts = response.data.data;
+
+        // Exclude Electronics from the start
+        const filteredProducts = allProducts.filter(
+          (p) => p.category.name !== "Electronics"
+        );
+
+        // Unique categories without Electronics
         const uniqueCategories = [
-          ...new Set(allProducts.map((p) => p.category.name)),
+          ...new Set(filteredProducts.map((p) => p.category.name)),
         ];
         setCategories(uniqueCategories);
 
         if (category && category !== "all") {
-          const filtered = allProducts.filter(
+          const filtered = filteredProducts.filter(
             (p) => p.category.name === category
           );
           setProducts(filtered);
         } else {
-          setProducts(allProducts);
+          setProducts(filteredProducts);
         }
 
         setLoading(false);
