@@ -1,20 +1,9 @@
 import "./PageNotFound.css";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import errrImg from "../../images/error.png";
 
 export default function PageNotFound() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    document.querySelector("nav")?.classList.add("d-none");
-    document.querySelector("footer")?.classList.add("d-none");
-
-    return () => {
-      document.querySelector("nav")?.classList.remove("d-none");
-      document.querySelector("footer")?.classList.remove("d-none");
-    };
-  }, []);
 
   return (
     <div className="container-fluid d-flex flex-column justify-content-center align-items-center text-center min-vh-100 bg-white">
@@ -41,7 +30,7 @@ export default function PageNotFound() {
           Go Home
         </button>
 
-        <button 
+        <button
           onClick={() => navigate("/Contact")}
           className="btn not-found-btn fw-bold px-4 py-2"
           style={{

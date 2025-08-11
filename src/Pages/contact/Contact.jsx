@@ -12,37 +12,31 @@ const Contact = () => {
 
   const [errors, setErrors] = useState({});
 
- 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  
   const validate = () => {
     let newErrors = {};
 
-   
     if (!formData.email) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Invalid email format";
     }
 
-    
     if (!formData.firstName) {
       newErrors.firstName = "First name is required";
     } else if (!/^[A-Za-z]+$/.test(formData.firstName)) {
       newErrors.firstName = "First name should contain letters only";
     }
 
-    
     if (!formData.lastName) {
       newErrors.lastName = "Last name is required";
     } else if (!/^[A-Za-z]+$/.test(formData.lastName)) {
       newErrors.lastName = "Last name should contain letters only";
     }
 
-    
     if (!formData.message) {
       newErrors.message = "Message is required";
     } else if (formData.message.length < 30) {
@@ -55,12 +49,10 @@ const Contact = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
       alert("Form submitted successfully!");
-     
     }
   };
 
@@ -73,7 +65,6 @@ const Contact = () => {
         </p>
 
         <form className="contact-form" onSubmit={handleSubmit}>
-          
           <label className="contact-label"> EMAIL *</label>
           <div className="input-wrapper">
             <FaEnvelope className="icon" />
@@ -87,7 +78,6 @@ const Contact = () => {
           </div>
           {errors.email && <p className="error-text">{errors.email}</p>}
 
-          
           <label className="contact-label">YOUR NAME</label>
           <div className="input-wrapper">
             <FaUser className="icon" />
@@ -101,7 +91,6 @@ const Contact = () => {
           </div>
           {errors.firstName && <p className="error-text">{errors.firstName}</p>}
 
-          
           <div className="input-wrapper">
             <FaUser className="icon" />
             <input
@@ -114,7 +103,6 @@ const Contact = () => {
           </div>
           {errors.lastName && <p className="error-text">{errors.lastName}</p>}
 
-          
           <label className="contact-label">MESSAGE</label>
           <textarea
             name="message"

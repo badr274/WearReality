@@ -53,7 +53,7 @@ const Customers = () => {
               </Col>
               <Col xs={12} md={4}>
                 <strong className="d-md-none">Email: </strong>
-                {user.email}
+                <span style={{ textWrap: "wrap" }}>{user.email}</span>
               </Col>
               <Col xs={12} md={4}>
                 <strong className="d-md-none">Registered: </strong>
